@@ -1,0 +1,45 @@
+/* fixed width only on sm and up */
+@media (max-width: 640px) {
+    .sticky {
+        min-width: 375px !important;
+    }
+}
+.head-breaker {
+    padding-bottom: 2% !important;
+    margin-top: 5px !important;
+}
+
+.btn-filter {
+    margin-top: 13% !important;
+}
+
+label {
+    font-size: 13px !important;
+    padding-top: 10px !important;
+}
+
+select, input, button {
+    padding: 4px !important;
+}
+
+.peek-get-l {
+    font-size: 10px !important;
+    padding: 3px !important;
+    float: right !important;
+    cursor: pointer !important;
+    position: absolute !important;
+    margin-top: 6px !important;
+    margin-left: -70px !important;
+    width: 60px !important;
+    justify-content: center !important;
+}
+
+.peek-get-r {
+    font-size: 10px !important;
+    padding: 3px !important;
+    float: right !important;
+    cursor: pointer !important;
+    position: absolute !important;
+    margin-top: 6px !important;
+    margin-left: -33px !important;
+}

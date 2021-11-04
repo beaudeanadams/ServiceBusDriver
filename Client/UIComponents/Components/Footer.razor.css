@@ -1,0 +1,18 @@
+.fixed-footer {
+    position: absolute;
+    bottom: 0px;
+}
+
+@media screen and (max-height: 1120px) {
+    .fixed-footer {
+        position: inherit;
+        bottom: auto;
+    }
+}
+
+@media screen and (min-height: 1120px) {
+    .fixed-footer {
+        position: absolute;
+        bottom: 0px;
+    }
+}

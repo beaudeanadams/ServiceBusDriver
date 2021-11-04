@@ -1,0 +1,23 @@
+/* fixed width only on sm and up */
+@media (min-width: 640px) {
+    .w-fixed {
+        flex: 0 1 230px;
+        min-width: 230px;
+    }
+}
+
+label {
+    font-size: 13px !important;
+    padding-top: 3px !important;
+}
+
+select, input, button {
+    padding: 0px !important;
+}
+
+input {
+    font-size: 13px !important;
+    margin-top: 3px !important;
+    background-color: white !important;
+    color: #7a7a7a !important;
+}

@@ -1,0 +1,97 @@
+﻿@page "/register"
+@layout AuthLayout
+@using FluentValidation
+@using ServiceBusDriver.Client.Features.Auth
+@using ServiceBusDriver.Client.UIComponents.BaseLayouts
+@inject IRegisterHandler _registerHandler
+@inject NavigationManager _navigationManager
+@inject ILocalStorageService _localStorageService
+@inject IToastService _toastService
+@inject IJSRuntime JsRuntime
+
+<div class="min-h-screen flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div class="max-w-md w-full space-y-8">
+        <div>
+            <img class="mx-auto w-auto" src="logo.png" alt="Service Bus Driver" style="height:100px">            
+            <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">
+                Sign in to your account
+            </h2>
+            <p class="mt-2 text-center text-sm text-gray-600">
+                And
+                <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500">
+                    start exploring and collaborating!
+                </a>
+            </p>
+        </div>
+        <div class="mt-8 space-y-6">
+            <input type="hidden" name="remember" value="true">
+            <div class="rounded-md shadow-sm -space-y-px">
+                <div>
+                    <label for="team-name" class="sr-only">Team Name</label>
+                    <input @bind="@_teamNameInput" disabled="@(_userRegistered)" id="team-name" name="text" type="text" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Team Name">
+                </div>
+                <div>
+                    <label for="email-address" class="sr-only">Email address</label>
+                    <input @bind="@_emailInput" disabled="@(_userRegistered)" id="email-address" name="email" type="email" autocomplete="email" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Email address">
+                </div>
+                <div>
+                    <label for="password" class="sr-only">Password</label>
+                    <input @bind="@_passwordInput" disabled="@(_userRegistered)" id="password" name="password" type="password" autocomplete="current-password" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Password">
+                </div>
+                <div>
+                    <label for="passwordConfirm"  class="sr-only">Confirm Password</label>
+                    <input @bind="@_passwordConfirmInput" disabled="@(_userRegistered)" id="passwordConfirm" name="passwordConfirm" type="password" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Password">
+                </div>
+            </div>
+
+            <div class="flex items-center justify-between">
+                <div class="text-sm">
+                    <a href="login" disabled="@(_userRegistered)" class="font-medium text-indigo-600 hover:text-indigo-500">
+                        Login?
+                    </a>
+                </div>
+
+                <div class="text-sm">
+                    <a href="#" disabled="@(_userRegistered)" class="font-medium text-indigo-600 hover:text-indigo-500">
+                        Forgot your password?
+                    </a>
+                </div>
+            </div>
+
+            <div>
+                <button @onclick="RegisterUser" disabled="@(_userRegistered)" type="submit" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                    <span class="absolute left-0 inset-y-0 flex items-center pl-3">
+                        <svg class="h-5 w-5 text-indigo-500 group-hover:text-indigo-400 h-6 w-6"  xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                        </svg>
+                    </span>
+                    Register
+                </button>
+            </div>
+            
+            @if (_userRegistered)
+            {
+                <div>
+                    <label for="otpInput" class="sr-only">Enter Otp</label>
+                    <input @bind="@_otpInput" id="otpInput" name="otpInput" type="password" required class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Otp">
+                </div>
+
+                <div>
+                    <button @onclick="VerifyOtp" type="submit" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        <span class="absolute left-0 inset-y-0 flex items-center pl-3">
+                            <svg class="h-5 w-5 text-indigo-500 group-hover:text-indigo-400 h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8"/>
+                            </svg>
+                        </span>
+                        Verify Otp
+                    </button>
+                </div>
+            }
+
+        </div>
+    </div>
+</div>
+
+@code {
+
+}

@@ -1,0 +1,29 @@
+@page "/"
+@using Microsoft.Extensions.Logging
+@using ServiceBusDriver.Client.Features.Instance
+@using ServiceBusDriver.Client.Services
+@inject ILogger<Index> _logger
+@inject HttpClient _http
+@inject IInstanceHandler _instanceHandler
+@inject MessageNotifierService _messageNotifierService
+@inject ITraceLogsNotifier _traceLogsNotifier
+@inject IJSRuntime _jsRuntime
+
+
+@if (_messageNotifierService.ValuesList != null && _messageNotifierService.ValuesList.Count>0)
+{
+    <MessageDashboard />
+}else{
+    <p>
+        <em>No content to show</em>
+    </p>
+}
+
+
+<div class="align-bottom">
+    <p class="text-lg leading-6 font-medium text-gray-900 ">Logs</p>
+</div>
+<hr style="padding-bottom: 2%;margin-top: 5px;">
+
+<div id="messagelogs" name="messagelogs" disabled style="width: 100%; height: 200px; background-color: #ececec; overflow-y: auto; font-family: monospace; margin-top: 1%; border: 1px solid #e2e2e2; ">
+    @((MarkupString)_traceLogsNotifier.GetTraceLogs())</div>

@@ -1,0 +1,118 @@
+﻿@using ServiceBusDriver.Client.Features.Instance
+@using ServiceBusDriver.Client.Services
+@inject IToastService _toastService
+@inject ITraceLogsNotifier _traceLogsNotifier
+@inject IInstanceHandler _instanceHandler
+@inject NavigationManager _navigationManager
+
+<div class="absolute z-10 -ml-4 mt-3 transform px-2 w-screen max-w-md sm:px-0 lg:ml-0 lg:left-1/2 lg:-translate-x-1/2">
+    <div class="rounded-lg shadow-lg ring-1 ring-black ring-opacity-5 overflow-hidden">
+        <div class="relative grid gap-6 bg-white px-5 py-6 sm:gap-8 sm:p-8">
+
+            <textarea id="connectionString" name="connectionString" rows="6" placeholder="Add connection string here" class="border w-full p-3 text-black"  disabled="@(processSuccessful)"  type="text" @bind="@_connectionString"/>
+            @if (!processSuccessful)
+            {
+                <span class="inline-flex items-center bg-gray-500 hover:bg-purple-600 p-3 shadow-md rounded-md text-white peek-get-l" @onclick="@ProcessConnectionString">
+
+                    @if (_processConnectionSpinner)
+                    {
+                        <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                        </svg>
+                    }
+                    else
+                    {
+                        <span>Process</span>
+                    }
+
+                </span>
+            }
+
+            @if (_connectionSettingsModel != null)
+            {
+                <span class="inline-flex items-center bg-gray-500 hover:bg-purple-600 p-3 shadow-md rounded-md text-white peek-get-l" @onclick="@ResetConnectionString">
+                    <span>Reset</span>
+                </span>
+
+                <div class="flex flex-col flex-grow w-5/5">
+                    <ul>
+                        <li>
+                            <label class="mb-2 text-gray-700">Namespace</label>
+                            <label class="mb-2 text-gray-700 block font-semibold" style="color: green;">@_connectionSettingsModel.Namespace</label>
+                        </li>
+                        <li>
+                            <label class="mb-2 text-gray-700">Uri</label>
+                            <label class="mb-2 text-gray-700 block font-semibold" style="color: green;">@_connectionSettingsModel.Uri</label>
+                        </li>
+                        <li>
+                            <label class="mb-2 text-gray-700">SharedAccessKeyName</label>
+                            <label class="mb-2 text-gray-700 block font-semibold" style="color: green;">@_connectionSettingsModel.SharedAccessKeyName</label>
+                        </li>
+                        <li>
+                            <label class="mb-2 text-gray-700">SharedAccessKey</label>
+                            <label class="mb-2 text-gray-700 block font-semibold" style="color: green;">@_connectionSettingsModel.SharedAccessKey</label>
+                        </li>
+                        <li>
+                            <label class="mb-2 text-gray-700">Sku</label>
+                            <label class="mb-2 text-gray-700 block font-semibold" style="color: green;">@_connectionSettingsModel.Sku</label>
+                        </li>
+                        <li>
+                            <label class="mb-2 text-gray-700">ConnectivityModeTransportType</label>
+                            <label class="mb-2 text-gray-700 block font-semibold" style="color: green;">@_connectionSettingsModel.ConnectivityModeTransportType</label>
+                        </li>
+                    </ul>
+                </div>
+
+                @if (!connectivitySuccessful)
+                {
+                    <span class="inline-flex items-center bg-gray-500 hover:bg-purple-600 p-3 shadow-md rounded-md text-white peek-get-l" @onclick="@TestConnection">
+                        @if (_testConnectionSpinner)
+                        {
+                            <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                        }
+                        else
+                        {
+                            <span>Test Connection</span>
+                        }
+
+                    </span>
+                }
+                @if (connectivitySuccessful)
+                {
+                    <span class="inline-flex items-center bg-gray-500 hover:bg-purple-600 p-3 shadow-md rounded-md text-white peek-get-l" disabled @onclick="@AddNewInstance">
+                        @if (_addInstanceSpinner)
+                        {
+                            <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                        }
+                        else
+                        {
+                            <span>Add Instance</span>
+                        }
+
+                    </span>
+                }
+            }
+
+            <a href="#" class="-m-3 p-3 flex items-start rounded-lg hover:bg-gray-50">
+                <svg class="flex-shrink-0 h-6 w-6 text-indigo-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"/>
+                </svg>
+                <div class="ml-4">
+                    <p class="text-base font-medium text-gray-900">
+                        Add New Instance
+                    </p>
+                    <p class="mt-1 text-sm text-gray-500">
+                        ConnectionStrings are encrypted using AES 256 Algorithm while at rest
+                    </p>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>

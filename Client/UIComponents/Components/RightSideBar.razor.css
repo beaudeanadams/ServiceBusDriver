@@ -1,0 +1,84 @@
+
+.tracelabel-info {
+    background-color: #58e858;
+    padding-left: 3px;
+    padding-right: 3px;
+    border-radius: 3px;
+}
+
+.tracelabel-warn {
+    background-color: #e8c258;
+    padding-left: 3px;
+    padding-right: 3px;
+    border-radius: 3px;
+}
+
+.tracelabel-error {
+    background-color: #e85858a3;
+    padding-left: 3px;
+    padding-right: 3px;
+    border-radius: 3px;
+}
+
+.tracelabel-debug {
+    background-color: #4d5b9d;
+    padding-left: 3px;
+    padding-right: 3px;
+    border-radius: 3px;
+    color: white;
+}
+
+.tracelabel-fatal {
+    background-color: #9d4d4d;
+    padding-left: 3px;
+    padding-right: 3px;
+    border-radius: 3px;
+    color: white;
+}
+
+table.scroll {
+    width: 100%;
+}
+
+table.scroll th,
+table.scroll td,
+table.scroll tr,
+table.scroll thead,
+table.scroll tbody { display: block; }
+
+table.scroll thead tr {
+    /* fallback */
+    width: 97%;
+    /* minus scroll bar width */
+    width: -webkit-calc(100% - 16px);
+    width:    -moz-calc(100% - 16px);
+    width:         calc(100% - 16px);
+}
+
+table.scroll tr:after {
+    content: ' ';
+    display: block;
+    visibility: hidden;
+    clear: both;
+}
+
+table.scroll tbody {
+    height: 500px;
+    overflow-y: auto;
+    overflow-x: auto;
+}
+
+table.scroll tbody td,
+table.scroll thead th {
+    float: left;
+}
+
+tbody td:last-child, thead th:last-child {
+    border-right: none !important;
+}
+
+table tr {
+    cursor: pointer !important;
+}
+
+

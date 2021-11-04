@@ -1,0 +1,20 @@
+@inherits LayoutComponentBase
+
+@using Blazored.Toast.Configuration
+@using Microsoft.Extensions.Logging
+
+@inject NavigationManager _navManager
+@inject ILogger<AuthLayout> _logger
+
+
+<div class="main">
+    <BlazoredToasts Position="ToastPosition.BottomRight"
+                    Timeout="5"
+                    RemoveToastsOnNavigation ="true"
+                    ShowProgressBar="true"
+                    MaxToastCount ="2" />
+
+    <div class="content px-4">
+        @Body
+    </div>
+</div>

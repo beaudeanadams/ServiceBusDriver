@@ -1,0 +1,267 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>ServiceBusDriver Password Otp</title>
+    <style type="text/css" rel="stylesheet" media="all">
+        /* Base ------------------------------ */
+        *:not(br):not(tr):not(html) {
+            -webkit-box-sizing: border-box;
+            box-sizing: border-box;
+            font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif;
+        }
+
+        body {
+            -webkit-text-size-adjust: none;
+            background-color: #F5F7F9;
+            color: #839197;
+            height: 100%;
+            line-height: 1.4;
+            margin: 0;
+            width: 100% !important;
+        }
+
+        a {
+            color: #414EF9;
+        }
+
+        /* Layout ------------------------------ */
+
+        .email-wrapper {
+            background-color: #F5F7F9;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+        }
+
+        .email-content {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+        }
+
+        /* Masthead ----------------------- */
+
+        .email-masthead {
+            padding: 25px 0;
+            text-align: center;
+        }
+
+        .email-masthead_logo {
+            border: 0;
+            max-width: 250px;
+            text-align: center;
+        }
+
+        .email-masthead_name {
+            color: #839197;
+            font-size: 16px;
+            font-weight: bold;
+            text-decoration: none;
+            text-shadow: 0 1px 0 white;
+        }
+
+        /* Body ------------------------------ */
+
+        .email-body {
+            background-color: #FFFFFF;
+            border-bottom: 1px solid #E7EAEC;
+            border-top: 1px solid #E7EAEC;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+        }
+
+        .email-body_inner {
+            margin: 0 auto;
+            padding: 0;
+            width: 570px;
+        }
+
+        .email-footer {
+            margin: 0 auto;
+            padding: 0;
+            text-align: center;
+            width: 570px;
+        }
+
+            .email-footer p {
+                color: #839197;
+            }
+
+        .body-action {
+            margin: 30px auto;
+            padding: 0;
+            text-align: center;
+            width: 100%;
+        }
+
+        .body-sub {
+            border-top: 1px solid #E7EAEC;
+            margin-top: 25px;
+            padding-top: 25px;
+        }
+
+        .content-cell {
+            padding: 35px;
+        }
+
+        .align-right {
+            text-align: right;
+        }
+
+        /* Type ------------------------------ */
+
+        h1 {
+            color: #292E31;
+            font-size: 19px;
+            font-weight: bold;
+            margin-top: 0;
+            text-align: left;
+        }
+
+        h2 {
+            color: #292E31;
+            font-size: 16px;
+            font-weight: bold;
+            margin-top: 0;
+            text-align: left;
+        }
+
+        h3 {
+            color: #292E31;
+            font-size: 14px;
+            font-weight: bold;
+            margin-top: 0;
+            text-align: left;
+        }
+
+        p {
+            color: #839197;
+            font-size: 16px;
+            line-height: 1.5em;
+            margin-top: 0;
+            text-align: left;
+        }
+
+            p.sub {
+                font-size: 12px;
+            }
+
+            p.center {
+                text-align: center;
+            }
+
+        /* Buttons ------------------------------ */
+
+        .button {
+            -webkit-text-size-adjust: none;
+           background-color: #4338CA;
+            border-radius: 3px;
+            color: #ffffff;
+            display: inline-block;
+            font-size: 20px;
+            line-height: 45px;
+            text-align: center;
+            text-decoration: none;
+            width: 200px;
+        }
+
+        .button--green {
+            background-color: #4338CA;
+        }
+
+        /*Media Queries ------------------------------ */
+
+        @media only screen and (max-width: 600px) {
+            .email-body_inner,
+            .email-footer {
+                width: 100% !important;
+            }
+        }
+
+        @media only screen and (max-width: 500px) {
+            .button {
+                width: 100% !important;
+            }
+        }
+    </style>
+</head>
+<body>
+    <table class="email-wrapper" width="100%" cellpadding="0" cellspacing="0">
+        <tr>
+            <td align="center">
+                <table class="email-content" width="100%" cellpadding="0" cellspacing="0">
+                    <!-- Logo -->
+                    <tr>
+                        <td class="email-masthead_logo">
+                            <img class="email-masthead_logo" src="https://firebasestorage.googleapis.com/v0/b/servicebusverifier-dev.appspot.com/o/website-assets%2Flogo.png?alt=media&token=127aac15-5901-412a-beca-cf02d245adae" alt="ServiceBusDriver" />
+                        </td>
+                        <td class="email-masthead">
+                            <a class="email-masthead_name"></a>
+                        </td>
+                    </tr>
+                    <!-- Email Body -->
+                    <tr>
+                        <td class="email-body" width="100%">
+                            <table class="email-body_inner" align="center" width="570" cellpadding="0" cellspacing="0">
+                                <!-- Body content -->
+                                <tr>
+                                    <td class="content-cell">
+                                        <h1>Hi {{display_name}}</h1>
+                                        <br />
+                                        <p>
+                                            We received a request to verify your email.
+                                        </p>
+                                        <br />
+                                        <p>Please find your One Time Code below</p>
+                                        <!-- Action -->
+                                        <table class="body-action" align="center" width="100%" cellpadding="0" cellspacing="0">
+                                            <tr>
+                                                <td align="center">
+                                                    <div>
+                                                        <p class="button">{{otp}}</p>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                       
+                                        <!-- Sub copy -->
+                                        <table class="body-sub">
+                                            <tr>
+                                                <td>
+                                                    <p class="sub">
+                                                        If you’re having trouble clicking the button, see the otp below.
+                                                    </p>
+                                                    <p class="sub">
+                                                        {{otp}}
+                                                    </p>
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <table class="email-footer" align="center" width="570" cellpadding="0" cellspacing="0">
+                                <tr>
+                                    <td class="content-cell">
+                                        <p class="sub center">
+                                            ServiceBusDriver Team
+                                            <br />
+                                        </p>
+                                    </td>
+                                </tr>
+                            </table>
+                        </td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+</body>
+</html>

@@ -1,0 +1,15 @@
+/* fixed width only on sm and up */
+@media (max-width: 640px) {
+    .header-logo {
+        display: none !important;
+    }
+}
+
+.peek-get-l {
+    font-size: 10px !important;
+    padding: 3px !important;
+    float: right !important;
+    cursor: pointer !important;
+    margin-top: 6px !important;
+    justify-content: center !important;
+}
