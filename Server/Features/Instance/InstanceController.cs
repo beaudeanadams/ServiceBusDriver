@@ -53,7 +53,7 @@ namespace ServiceBusDriver.Server.Features.Instance
         [Produces("application/json")]
         public async Task<ActionResult> GetAllQueue([FromRoute] string id)
         {
-            var result = await _mediator.Send(new GetTopicsRequest(id));
+            var result = await _mediator.Send(new GetQueuesRequest(id));
 
             return Ok(result);
         }
