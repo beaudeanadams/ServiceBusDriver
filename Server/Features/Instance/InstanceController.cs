@@ -41,7 +41,17 @@ namespace ServiceBusDriver.Server.Features.Instance
         [HttpGet]
         [Route("{id}/topics")]
         [Produces("application/json")]
-        public async Task<ActionResult> GetAll([FromRoute] string id)
+        public async Task<ActionResult> GetAllTopics([FromRoute] string id)
+        {
+            var result = await _mediator.Send(new GetTopicsRequest(id));
+
+            return Ok(result);
+        }
+        
+        [HttpGet]
+        [Route("{id}/queues")]
+        [Produces("application/json")]
+        public async Task<ActionResult> GetAllQueue([FromRoute] string id)
         {
             var result = await _mediator.Send(new GetTopicsRequest(id));
 
