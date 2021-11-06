@@ -106,7 +106,7 @@ namespace ServiceBusDriver.Server
                 c.Timeout = TimeSpan.FromMilliseconds(2000);
             });
             
-            services.AddScoped<IInstanceService, MyInstanceService>();
+            services.AddScoped<IInstanceService, CustomDbInstanceService>();
             services.AddScoped<IAesEncryptService, AesEncryptService>();
             services.AddScoped<IClaimsManager, ClaimsManager>();
             services.AddScoped<ICurrentUser, CurrentUser>();

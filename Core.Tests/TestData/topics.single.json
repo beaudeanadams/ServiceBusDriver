@@ -1,1 +1,726 @@
-﻿
+﻿[
+  {
+    "DefaultMessageTimeToLive": "14.00:00:00",
+    "AutoDeleteOnIdle": "10675199.02:48:05.4775807",
+    "MaxSizeInMegabytes": 1024,
+    "RequiresDuplicateDetection": false,
+    "DuplicateDetectionHistoryTimeWindow": "00:10:00",
+    "Name": "ev10accountclosed.topic",
+    "AuthorizationRules": [
+      {
+        "ClaimType": "SharedAccessKey",
+        "KeyName": "ManageKey",
+        "PrimaryKey": "ks4FIE604vz7ecb8ZYuTYhBaDggCrOkodxWb8helnDg=",
+        "SecondaryKey": "dl1D+MR2PTC2pv5kIvn0odWnDF0uZSchJXybO/sMzb4=",
+        "Rights": [ 0, 1, 2 ],
+        "CreatedTime": "2020-09-22T08:54:49.8979497+00:00",
+        "ModifiedTime": "2020-09-22T08:54:49.8979497+00:00"
+      }
+    ],
+    "Status": {},
+    "EnablePartitioning": false,
+    "SupportOrdering": true,
+    "EnableBatchedOperations": true,
+    "UserMetadata": null
+  },
+  {
+    "DefaultMessageTimeToLive": "14.00:00:00",
+    "AutoDeleteOnIdle": "10675199.02:48:05.4775807",
+    "MaxSizeInMegabytes": 1024,
+    "RequiresDuplicateDetection": false,
+    "DuplicateDetectionHistoryTimeWindow": "00:10:00",
+    "Name": "ev12payidregistered.topic",
+    "AuthorizationRules": [
+      {
+        "ClaimType": "SharedAccessKey",
+        "KeyName": "ManageKey",
+        "PrimaryKey": "M0s2m8PTgvYnlRG1jt/3qoi2TWYZVYfb44t30Xsc0gs=",
+        "SecondaryKey": "YpVNc/WCVpcvcJTShyPXNtRKXaAn4Mm7LPbJSqBY9aw=",
+        "Rights": [ 0, 1, 2 ],
+        "CreatedTime": "2020-10-23T01:42:58.8277137+00:00",
+        "ModifiedTime": "2020-10-23T01:42:58.8277137+00:00"
+      }
+    ],
+    "Status": {},
+    "EnablePartitioning": false,
+    "SupportOrdering": true,
+    "EnableBatchedOperations": true,
+    "UserMetadata": null
+  },
+  {
+    "DefaultMessageTimeToLive": "14.00:00:00",
+    "AutoDeleteOnIdle": "10675199.02:48:05.4775807",
+    "MaxSizeInMegabytes": 1024,
+    "RequiresDuplicateDetection": false,
+    "DuplicateDetectionHistoryTimeWindow": "00:10:00",
+    "Name": "ev13payidderegistered.topic",
+    "AuthorizationRules": [
+      {
+        "ClaimType": "SharedAccessKey",
+        "KeyName": "ManageKey",
+        "PrimaryKey": "Ca1My7tAdxDlRyM7FnEWN72jXl4FDd5duDhPoEe/ODg=",
+        "SecondaryKey": "xDwrFrAMDQwNx6yhEal+K9WXoeb4+MCt6pSOXSySUtM=",
+        "Rights": [ 0, 1, 2 ],
+        "CreatedTime": "2021-01-21T05:09:48.3582371+00:00",
+        "ModifiedTime": "2021-01-21T05:09:48.3582371+00:00"
+      }
+    ],
+    "Status": {},
+    "EnablePartitioning": false,
+    "SupportOrdering": true,
+    "EnableBatchedOperations": true,
+    "UserMetadata": null
+  },
+  {
+    "DefaultMessageTimeToLive": "14.00:00:00",
+    "AutoDeleteOnIdle": "10675199.02:48:05.4775807",
+    "MaxSizeInMegabytes": 1024,
+    "RequiresDuplicateDetection": false,
+    "DuplicateDetectionHistoryTimeWindow": "00:10:00",
+    "Name": "ev14statementssentevent.topic",
+    "AuthorizationRules": [
+      {
+        "ClaimType": "SharedAccessKey",
+        "KeyName": "ManageKey",
+        "PrimaryKey": "SkVPlRbCkTDejhJnQM12CrGMB0yKygHFpCiKtTWPy/o=",
+        "SecondaryKey": "tPffcD6Fh9TAM1l4mMJv2r5LO+0kRoZub4TeC+rMM58=",
+        "Rights": [ 0, 1, 2 ],
+        "CreatedTime": "2020-09-22T09:34:58.9116271+00:00",
+        "ModifiedTime": "2020-09-22T09:34:58.9116271+00:00"
+      }
+    ],
+    "Status": {},
+    "EnablePartitioning": false,
+    "SupportOrdering": true,
+    "EnableBatchedOperations": true,
+    "UserMetadata": null
+  },
+  {
+    "DefaultMessageTimeToLive": "14.00:00:00",
+    "AutoDeleteOnIdle": "10675199.02:48:05.4775807",
+    "MaxSizeInMegabytes": 1024,
+    "RequiresDuplicateDetection": false,
+    "DuplicateDetectionHistoryTimeWindow": "00:10:00",
+    "Name": "ev15accountmodified.topic",
+    "AuthorizationRules": [
+      {
+        "ClaimType": "SharedAccessKey",
+        "KeyName": "ManageKey",
+        "PrimaryKey": "inw/cZFxidQfWRXL8rrBR5nt+7E5JnJeL9hImV7yFFw=",
+        "SecondaryKey": "vJheg9Vs+cKofUikGSV6aTjeVG2eFj0loA13BlPm6lM=",
+        "Rights": [ 0, 1, 2 ],
+        "CreatedTime": "2020-09-22T09:19:40.4280597+00:00",
+        "ModifiedTime": "2020-09-22T09:19:40.4280597+00:00"
+      }
+    ],
+    "Status": {},
+    "EnablePartitioning": false,
+    "SupportOrdering": true,
+    "EnableBatchedOperations": true,
+    "UserMetadata": null
+  },
+  {
+    "DefaultMessageTimeToLive": "14.00:00:00",
+    "AutoDeleteOnIdle": "10675199.02:48:05.4775807",
+    "MaxSizeInMegabytes": 1024,
+    "RequiresDuplicateDetection": false,
+    "DuplicateDetectionHistoryTimeWindow": "00:10:00",
+    "Name": "ev18persistedtransaction.topic",
+    "AuthorizationRules": [
+      {
+        "ClaimType": "SharedAccessKey",
+        "KeyName": "ManageKey",
+        "PrimaryKey": "58wNLVDS4WU12P33InlLG80JWQEGwbzaATqPU29pzNQ=",
+        "SecondaryKey": "jqhxR3LHtj8+lwmWUM3MYLgdgugPhKXxII4Be1p4rbI=",
+        "Rights": [ 0, 1, 2 ],
+        "CreatedTime": "2020-10-22T00:29:58.0897685+00:00",
+        "ModifiedTime": "2020-10-22T00:29:58.0897685+00:00"
+      }
+    ],
+    "Status": {},
+    "EnablePartitioning": false,
+    "SupportOrdering": true,
+    "EnableBatchedOperations": true,
+    "UserMetadata": null
+  },
+  {
+    "DefaultMessageTimeToLive": "14.00:00:00",
+    "AutoDeleteOnIdle": "10675199.02:48:05.4775807",
+    "MaxSizeInMegabytes": 1024,
+    "RequiresDuplicateDetection": false,
+    "DuplicateDetectionHistoryTimeWindow": "00:10:00",
+    "Name": "ev18transactioncreated.topic",
+    "AuthorizationRules": [
+      {
+        "ClaimType": "SharedAccessKey",
+        "KeyName": "ManageKey",
+        "PrimaryKey": "v3xsjIEMwwUldpnuq4ISP09OPAj/hkKJZEMCyCji83o=",
+        "SecondaryKey": "nREq80X7zSofIaQbVdWYmPJ9ymDSpansk7RdXMJQ1AI=",
+        "Rights": [ 0, 1, 2 ],
+        "CreatedTime": "2020-09-27T22:19:01.5737954+00:00",
+        "ModifiedTime": "2020-09-27T22:19:01.5737954+00:00"
+      }
+    ],
+    "Status": {},
+    "EnablePartitioning": false,
+    "SupportOrdering": true,
+    "EnableBatchedOperations": true,
+    "UserMetadata": null
+  },
+  {
+    "DefaultMessageTimeToLive": "14.00:00:00",
+    "AutoDeleteOnIdle": "10675199.02:48:05.4775807",
+    "MaxSizeInMegabytes": 1024,
+    "RequiresDuplicateDetection": false,
+    "DuplicateDetectionHistoryTimeWindow": "00:10:00",
+    "Name": "ev1customercreated.topic",
+    "AuthorizationRules": [
+      {
+        "ClaimType": "SharedAccessKey",
+        "KeyName": "ManageKey",
+        "PrimaryKey": "2qkfKJ1JLq42XEnmamXgUgAmbIzNCFYV0Vza3IecmiQ=",
+        "SecondaryKey": "LliNfCVrUnubrcibhZ3iEi0pie6iubU/VzHXS5KM0l4=",
+        "Rights": [ 0, 1, 2 ],
+        "CreatedTime": "2020-09-22T23:38:26.0558032+00:00",
+        "ModifiedTime": "2020-09-22T23:38:26.0558032+00:00"
+      }
+    ],
+    "Status": {},
+    "EnablePartitioning": false,
+    "SupportOrdering": true,
+    "EnableBatchedOperations": true,
+    "UserMetadata": null
+  },
+  {
+    "DefaultMessageTimeToLive": "365.00:00:00",
+    "AutoDeleteOnIdle": "365.00:00:00",
+    "MaxSizeInMegabytes": 1024,
+    "RequiresDuplicateDetection": false,
+    "DuplicateDetectionHistoryTimeWindow": "1.00:00:00",
+    "Name": "ev20.customerpfm.topic",
+    "AuthorizationRules": [
+      {
+        "ClaimType": "SharedAccessKey",
+        "KeyName": "ManageKey",
+        "PrimaryKey": "anrS8n3sCsYhag20aMrnjBOBnsKc4ZF/UstMR4SkdVo=",
+        "SecondaryKey": "jP1XRt2DHZDGFTwABbfrO2BOBhdwuJYQADDuiJtSwag=",
+        "Rights": [ 0, 1, 2 ],
+        "CreatedTime": "2020-09-23T04:17:59.6815077+00:00",
+        "ModifiedTime": "2020-09-23T04:17:59.6815077+00:00"
+      }
+    ],
+    "Status": {},
+    "EnablePartitioning": false,
+    "SupportOrdering": true,
+    "EnableBatchedOperations": true,
+    "UserMetadata": null
+  },
+  {
+    "DefaultMessageTimeToLive": "14.00:00:00",
+    "AutoDeleteOnIdle": "10675199.02:48:05.4775807",
+    "MaxSizeInMegabytes": 1024,
+    "RequiresDuplicateDetection": false,
+    "DuplicateDetectionHistoryTimeWindow": "00:10:00",
+    "Name": "ev20.customerpfm.transaction.topic",
+    "AuthorizationRules": [
+      {
+        "ClaimType": "SharedAccessKey",
+        "KeyName": "ManageKey",
+        "PrimaryKey": "UY4R1V1JHx5FmPyi+MAbcCG1s5ndSmTmD149cwYh76M=",
+        "SecondaryKey": "C2k9wA91z3Vg8pbNRGcSv8Lt4Dwgoq9odUu0awzUHG4=",
+        "Rights": [ 0, 1, 2 ],
+        "CreatedTime": "2020-09-23T04:17:59.6303443+00:00",
+        "ModifiedTime": "2020-09-23T04:17:59.6303443+00:00"
+      }
+    ],
+    "Status": {},
+    "EnablePartitioning": false,
+    "SupportOrdering": true,
+    "EnableBatchedOperations": true,
+    "UserMetadata": null
+  },
+  {
+    "DefaultMessageTimeToLive": "14.00:00:00",
+    "AutoDeleteOnIdle": "10675199.02:48:05.4775807",
+    "MaxSizeInMegabytes": 1024,
+    "RequiresDuplicateDetection": false,
+    "DuplicateDetectionHistoryTimeWindow": "00:10:00",
+    "Name": "ev24paymentdeclinedalertsentevent.topic",
+    "AuthorizationRules": [
+      {
+        "ClaimType": "SharedAccessKey",
+        "KeyName": "ManageKey",
+        "PrimaryKey": "UKC7kxSOa8lp/NCGTTCPK8Xkfxf0NZcnLkDsdUvjIns=",
+        "SecondaryKey": "8BSPZVCQmbDOJWBttx2i6ZH6BmbBVOza8R1KoBxEaG4=",
+        "Rights": [ 0, 1, 2 ],
+        "CreatedTime": "2020-09-22T09:34:58.8136753+00:00",
+        "ModifiedTime": "2020-09-22T09:34:58.8136753+00:00"
+      }
+    ],
+    "Status": {},
+    "EnablePartitioning": false,
+    "SupportOrdering": true,
+    "EnableBatchedOperations": true,
+    "UserMetadata": null
+  },
+  {
+    "DefaultMessageTimeToLive": "14.00:00:00",
+    "AutoDeleteOnIdle": "10675199.02:48:05.4775807",
+    "MaxSizeInMegabytes": 1024,
+    "RequiresDuplicateDetection": false,
+    "DuplicateDetectionHistoryTimeWindow": "00:10:00",
+    "Name": "ev30communicationsentevent.topic",
+    "AuthorizationRules": [
+      {
+        "ClaimType": "SharedAccessKey",
+        "KeyName": "ManageKey",
+        "PrimaryKey": "WnfEk824ObB1izQ8wlfYvkSjiipsFB+2KbG0aO1LuZ0=",
+        "SecondaryKey": "5HyeCJICsInAEkSZZEc8T/MIufPNvyJuvOk0Ym3ErI4=",
+        "Rights": [ 0, 1, 2 ],
+        "CreatedTime": "2020-09-22T09:34:59.805859+00:00",
+        "ModifiedTime": "2020-09-22T09:34:59.805859+00:00"
+      }
+    ],
+    "Status": {},
+    "EnablePartitioning": false,
+    "SupportOrdering": true,
+    "EnableBatchedOperations": true,
+    "UserMetadata": null
+  },
+  {
+    "DefaultMessageTimeToLive": "365.00:00:00",
+    "AutoDeleteOnIdle": "365.00:00:00",
+    "MaxSizeInMegabytes": 1024,
+    "RequiresDuplicateDetection": false,
+    "DuplicateDetectionHistoryTimeWindow": "1.00:00:00",
+    "Name": "ev32communicationpreparedevent.topic",
+    "AuthorizationRules": [
+      {
+        "ClaimType": "SharedAccessKey",
+        "KeyName": "ManageKey",
+        "PrimaryKey": "iPFDU7Xf/vz3v97DHuuoHa6brdqaCSGVoCrodGFoLJM=",
+        "SecondaryKey": "ReX2ZcdqYOnsj/SoInSnmMnrxX1g5rz6ELAhyvpCB9o=",
+        "Rights": [ 0, 1, 2 ],
+        "CreatedTime": "2020-09-24T08:01:48.2097685+00:00",
+        "ModifiedTime": "2020-09-24T08:01:48.2097685+00:00"
+      }
+    ],
+    "Status": {},
+    "EnablePartitioning": false,
+    "SupportOrdering": true,
+    "EnableBatchedOperations": true,
+    "UserMetadata": null
+  },
+  {
+    "DefaultMessageTimeToLive": "14.00:00:00",
+    "AutoDeleteOnIdle": "365.00:00:00",
+    "MaxSizeInMegabytes": 1024,
+    "RequiresDuplicateDetection": false,
+    "DuplicateDetectionHistoryTimeWindow": "1.00:00:00",
+    "Name": "ev33customeraddressupdated.topic",
+    "AuthorizationRules": [
+      {
+        "ClaimType": "SharedAccessKey",
+        "KeyName": "ManageKey",
+        "PrimaryKey": "faQZtYCAdPbZEjYKiflKEhzjmzOKc6D4XwTOZ2Qiv6w=",
+        "SecondaryKey": "OXpVLWem6CbG7hokxrc7+8RQNDDahIG53ed23AVJ6g8=",
+        "Rights": [ 0, 1, 2 ],
+        "CreatedTime": "2020-09-24T07:57:30.384545+00:00",
+        "ModifiedTime": "2020-09-24T07:57:30.384545+00:00"
+      }
+    ],
+    "Status": {},
+    "EnablePartitioning": false,
+    "SupportOrdering": true,
+    "EnableBatchedOperations": true,
+    "UserMetadata": null
+  },
+  {
+    "DefaultMessageTimeToLive": "14.00:00:00",
+    "AutoDeleteOnIdle": "10675199.02:48:05.4775807",
+    "MaxSizeInMegabytes": 1024,
+    "RequiresDuplicateDetection": false,
+    "DuplicateDetectionHistoryTimeWindow": "00:10:00",
+    "Name": "ev34beneficiary.topic",
+    "AuthorizationRules": [
+      {
+        "ClaimType": "SharedAccessKey",
+        "KeyName": "ManageKey",
+        "PrimaryKey": "3Dr/FcHwKL3zIOaXmJUgmgTao14wcBbP7kyiCKbHBHw=",
+        "SecondaryKey": "H6jVeDKsqD9kw1biwLMJPzvAgckRds92IuWftG24HKU=",
+        "Rights": [ 0, 1, 2 ],
+        "CreatedTime": "2020-10-13T03:10:51.3857932+00:00",
+        "ModifiedTime": "2020-10-13T03:10:51.3857932+00:00"
+      }
+    ],
+    "Status": {},
+    "EnablePartitioning": false,
+    "SupportOrdering": true,
+    "EnableBatchedOperations": true,
+    "UserMetadata": null
+  },
+  {
+    "DefaultMessageTimeToLive": "14.00:00:00",
+    "AutoDeleteOnIdle": "10675199.02:48:05.4775807",
+    "MaxSizeInMegabytes": 1024,
+    "RequiresDuplicateDetection": false,
+    "DuplicateDetectionHistoryTimeWindow": "00:10:00",
+    "Name": "ev35authorisationalertsentevent.topic",
+    "AuthorizationRules": [
+      {
+        "ClaimType": "SharedAccessKey",
+        "KeyName": "ManageKey",
+        "PrimaryKey": "6u1IxYJ6vZ3qwbdgOwggHZnhsuAmC+Vv9gAmCV3ST0k=",
+        "SecondaryKey": "95stmvfJfUVJoNVsLSxrYI6jW8INVrO58FPnV4s1URQ=",
+        "Rights": [ 0, 1, 2 ],
+        "CreatedTime": "2020-09-22T09:34:59.5108307+00:00",
+        "ModifiedTime": "2020-09-22T09:34:59.5108307+00:00"
+      }
+    ],
+    "Status": {},
+    "EnablePartitioning": false,
+    "SupportOrdering": true,
+    "EnableBatchedOperations": true,
+    "UserMetadata": null
+  },
+  {
+    "DefaultMessageTimeToLive": "14.00:00:00",
+    "AutoDeleteOnIdle": "10675199.02:48:05.4775807",
+    "MaxSizeInMegabytes": 1024,
+    "RequiresDuplicateDetection": false,
+    "DuplicateDetectionHistoryTimeWindow": "00:10:00",
+    "Name": "ev36cardspasscode.topic",
+    "AuthorizationRules": [
+      {
+        "ClaimType": "SharedAccessKey",
+        "KeyName": "ManageKey",
+        "PrimaryKey": "QmA1mVoEbZPPL0260VgeH3tScwgPpY9QwELovd7FCXE=",
+        "SecondaryKey": "5/hxI5YiF6xK1OCIeWVbBulHpvtqqLw/Qh+27wun4kM=",
+        "Rights": [ 0, 1, 2 ],
+        "CreatedTime": "2020-09-22T09:34:59.519215+00:00",
+        "ModifiedTime": "2020-09-22T09:34:59.519215+00:00"
+      }
+    ],
+    "Status": {},
+    "EnablePartitioning": false,
+    "SupportOrdering": true,
+    "EnableBatchedOperations": true,
+    "UserMetadata": null
+  },
+  {
+    "DefaultMessageTimeToLive": "14.00:00:00",
+    "AutoDeleteOnIdle": "10675199.02:48:05.4775807",
+    "MaxSizeInMegabytes": 1024,
+    "RequiresDuplicateDetection": false,
+    "DuplicateDetectionHistoryTimeWindow": "00:10:00",
+    "Name": "ev37cardsprovisioning.topic",
+    "AuthorizationRules": [
+      {
+        "ClaimType": "SharedAccessKey",
+        "KeyName": "ManageKey",
+        "PrimaryKey": "BdxRhKCWZj/LNa+VhnxCUZfZSA/2uj+Be4gJ3+ZrFmQ=",
+        "SecondaryKey": "MBieTMFDrsuV1irj2OVY5UmgqV4K7tuLI57cl/GAZbw=",
+        "Rights": [ 0, 1, 2 ],
+        "CreatedTime": "2020-09-22T09:34:58.8999044+00:00",
+        "ModifiedTime": "2020-09-22T09:34:58.8999044+00:00"
+      }
+    ],
+    "Status": {},
+    "EnablePartitioning": false,
+    "SupportOrdering": true,
+    "EnableBatchedOperations": true,
+    "UserMetadata": null
+  },
+  {
+    "DefaultMessageTimeToLive": "365.00:00:00",
+    "AutoDeleteOnIdle": "365.00:00:00",
+    "MaxSizeInMegabytes": 1024,
+    "RequiresDuplicateDetection": false,
+    "DuplicateDetectionHistoryTimeWindow": "1.00:00:00",
+    "Name": "ev38loyalty.comms.topic",
+    "AuthorizationRules": [
+      {
+        "ClaimType": "SharedAccessKey",
+        "KeyName": "ManageKey",
+        "PrimaryKey": "hv+O6UPSeOAr7L5+QF3OpyPC6t6q9D5SovfZb03KUfw=",
+        "SecondaryKey": "Qs+l8mlP6a2a56slYL4KfUE4SrP7TJP5WQCwBP8gTxk=",
+        "Rights": [ 0, 1, 2 ],
+        "CreatedTime": "2020-09-27T13:02:52.0708869+00:00",
+        "ModifiedTime": "2020-09-27T13:02:52.0708869+00:00"
+      }
+    ],
+    "Status": {},
+    "EnablePartitioning": false,
+    "SupportOrdering": true,
+    "EnableBatchedOperations": true,
+    "UserMetadata": null
+  },
+  {
+    "DefaultMessageTimeToLive": "14.00:00:00",
+    "AutoDeleteOnIdle": "10675199.02:48:05.4775807",
+    "MaxSizeInMegabytes": 1024,
+    "RequiresDuplicateDetection": false,
+    "DuplicateDetectionHistoryTimeWindow": "00:10:00",
+    "Name": "ev39paymentlimitupdated.topic",
+    "AuthorizationRules": [
+      {
+        "ClaimType": "SharedAccessKey",
+        "KeyName": "ManageKey",
+        "PrimaryKey": "vVZGi7hQcBL0gxx3h6mED1VWVH75rnr9n6czuqb79Vk=",
+        "SecondaryKey": "zRZFa/YZFYTkYTOaxGPD6fZGBkCdRnMWiNlSt1L/WwU=",
+        "Rights": [ 0, 1, 2 ],
+        "CreatedTime": "2020-10-13T03:10:49.3237574+00:00",
+        "ModifiedTime": "2020-10-13T03:10:49.3237574+00:00"
+      }
+    ],
+    "Status": {},
+    "EnablePartitioning": false,
+    "SupportOrdering": true,
+    "EnableBatchedOperations": true,
+    "UserMetadata": null
+  },
+  {
+    "DefaultMessageTimeToLive": "14.00:00:00",
+    "AutoDeleteOnIdle": "10675199.02:48:05.4775807",
+    "MaxSizeInMegabytes": 1024,
+    "RequiresDuplicateDetection": false,
+    "DuplicateDetectionHistoryTimeWindow": "00:10:00",
+    "Name": "ev40paymentschedulecreatedupdatedevent.topic",
+    "AuthorizationRules": [
+      {
+        "ClaimType": "SharedAccessKey",
+        "KeyName": "ManageKey",
+        "PrimaryKey": "LPdYXNuSzW383hX2B3zvZ80PrpvbnQTCU/bgWCBOc8s=",
+        "SecondaryKey": "eXAU8CFZatqcRi0NIFyNkG6HaosgCOmYBZqWmtaLzgg=",
+        "Rights": [ 0, 1, 2 ],
+        "CreatedTime": "2020-10-13T03:10:49.0925618+00:00",
+        "ModifiedTime": "2020-10-13T03:10:49.0925618+00:00"
+      }
+    ],
+    "Status": {},
+    "EnablePartitioning": false,
+    "SupportOrdering": true,
+    "EnableBatchedOperations": true,
+    "UserMetadata": null
+  },
+  {
+    "DefaultMessageTimeToLive": "14.00:00:00",
+    "AutoDeleteOnIdle": "10675199.02:48:05.4775807",
+    "MaxSizeInMegabytes": 1024,
+    "RequiresDuplicateDetection": false,
+    "DuplicateDetectionHistoryTimeWindow": "00:10:00",
+    "Name": "ev41cardloststolen.topic",
+    "AuthorizationRules": [
+      {
+        "ClaimType": "SharedAccessKey",
+        "KeyName": "ManageKey",
+        "PrimaryKey": "3KwX4lR+uT7xdBWsGWg1R9RH2p912HvPpuqRyZzjUe0=",
+        "SecondaryKey": "lHTTZE1kezVS1IBgRJSHV3cfZNc5whoFjZLcqfQE/mg=",
+        "Rights": [ 0, 1, 2 ],
+        "CreatedTime": "2020-10-07T07:05:49.0169275+00:00",
+        "ModifiedTime": "2020-10-07T07:05:49.0169275+00:00"
+      }
+    ],
+    "Status": {},
+    "EnablePartitioning": false,
+    "SupportOrdering": true,
+    "EnableBatchedOperations": true,
+    "UserMetadata": null
+  },
+  {
+    "DefaultMessageTimeToLive": "14.00:00:00",
+    "AutoDeleteOnIdle": "10675199.02:48:05.4775807",
+    "MaxSizeInMegabytes": 1024,
+    "RequiresDuplicateDetection": false,
+    "DuplicateDetectionHistoryTimeWindow": "00:10:00",
+    "Name": "ev44wildfire.scan.topic",
+    "AuthorizationRules": [
+      {
+        "ClaimType": "SharedAccessKey",
+        "KeyName": "ManageKey",
+        "PrimaryKey": "EtEYzqBdGDyMtRlStG1N51Zmbt6gp7mnYhKpfsLbM6w=",
+        "SecondaryKey": "/H/O+TG58O475oW0ZWguJIMtfnDMqLasytPxJopsxfo=",
+        "Rights": [ 0, 1, 2 ],
+        "CreatedTime": "2020-09-27T21:42:42.8498698+00:00",
+        "ModifiedTime": "2020-09-27T21:42:42.8498698+00:00"
+      }
+    ],
+    "Status": {},
+    "EnablePartitioning": false,
+    "SupportOrdering": true,
+    "EnableBatchedOperations": true,
+    "UserMetadata": null
+  },
+  {
+    "DefaultMessageTimeToLive": "14.00:00:00",
+    "AutoDeleteOnIdle": "10675199.02:48:05.4775807",
+    "MaxSizeInMegabytes": 1024,
+    "RequiresDuplicateDetection": false,
+    "DuplicateDetectionHistoryTimeWindow": "00:10:00",
+    "Name": "ev45npppaymentreturn.topic",
+    "AuthorizationRules": [
+      {
+        "ClaimType": "SharedAccessKey",
+        "KeyName": "ManageKey",
+        "PrimaryKey": "UGPDjvah/dvA9v48Bg8O4MysRcBGLwqDpVzmqlx5Ww4=",
+        "SecondaryKey": "eLLuWHYyrbYHGcKp7RakFm/sFqLzbMVVH54JRLr6BNs=",
+        "Rights": [ 0, 1, 2 ],
+        "CreatedTime": "2021-09-15T07:09:29.9755707+00:00",
+        "ModifiedTime": "2021-09-15T07:09:29.9755707+00:00"
+      }
+    ],
+    "Status": {},
+    "EnablePartitioning": false,
+    "SupportOrdering": true,
+    "EnableBatchedOperations": true,
+    "UserMetadata": null
+  },
+  {
+    "DefaultMessageTimeToLive": "14.00:00:00",
+    "AutoDeleteOnIdle": "365.00:00:00",
+    "MaxSizeInMegabytes": 1024,
+    "RequiresDuplicateDetection": false,
+    "DuplicateDetectionHistoryTimeWindow": "1.00:00:00",
+    "Name": "ev46adobesmsevent.topic",
+    "AuthorizationRules": [
+      {
+        "ClaimType": "SharedAccessKey",
+        "KeyName": "ManageKey",
+        "PrimaryKey": "m4fVTzUZr6enYAeO/Ct9JcruqPO0zpJ7XzpHyO3JOTE=",
+        "SecondaryKey": "GiukMhmk6uKKqfy0QbHEZpQfp14j+O6eKbuGsUHah9s=",
+        "Rights": [ 0, 1, 2 ],
+        "CreatedTime": "2020-09-24T08:01:51.6447842+00:00",
+        "ModifiedTime": "2020-09-24T08:01:51.6447842+00:00"
+      }
+    ],
+    "Status": {},
+    "EnablePartitioning": false,
+    "SupportOrdering": true,
+    "EnableBatchedOperations": true,
+    "UserMetadata": null
+  },
+  {
+    "DefaultMessageTimeToLive": "14.00:00:00",
+    "AutoDeleteOnIdle": "10675199.02:48:05.4775807",
+    "MaxSizeInMegabytes": 81920,
+    "RequiresDuplicateDetection": false,
+    "DuplicateDetectionHistoryTimeWindow": "00:10:00",
+    "Name": "ev47enrichtransaction.topic",
+    "AuthorizationRules": [
+      {
+        "ClaimType": "SharedAccessKey",
+        "KeyName": "ManageKey",
+        "PrimaryKey": "/30ovFEYsf37QkTdsv6V3IsVxZddCiJQIYY0VzRYmz4=",
+        "SecondaryKey": "ED9yjbIRJ9oEae/WgygPXdm5jLBkBTTqh0cD3egdPXE=",
+        "Rights": [ 0, 1, 2 ],
+        "CreatedTime": "2020-10-20T00:34:16.0139371+00:00",
+        "ModifiedTime": "2020-10-20T00:34:16.0139371+00:00"
+      }
+    ],
+    "Status": {},
+    "EnablePartitioning": false,
+    "SupportOrdering": true,
+    "EnableBatchedOperations": true,
+    "UserMetadata": null
+  },
+  {
+    "DefaultMessageTimeToLive": "14.00:00:00",
+    "AutoDeleteOnIdle": "10675199.02:48:05.4775807",
+    "MaxSizeInMegabytes": 1024,
+    "RequiresDuplicateDetection": false,
+    "DuplicateDetectionHistoryTimeWindow": "00:10:00",
+    "Name": "ev6accountcreated.topic",
+    "AuthorizationRules": [
+      {
+        "ClaimType": "SharedAccessKey",
+        "KeyName": "ManageKey",
+        "PrimaryKey": "ZnzUnQmXmbfLSp/yPZddSXs/G4G5EtWmdXjiRQ/JgaA=",
+        "SecondaryKey": "38HaxKG2dOYvn7HSqrK3kM4gabXg7TcMCYQAgbZLPe0=",
+        "Rights": [ 0, 1, 2 ],
+        "CreatedTime": "2020-09-22T08:54:51.3076949+00:00",
+        "ModifiedTime": "2020-09-22T08:54:51.3076949+00:00"
+      }
+    ],
+    "Status": {},
+    "EnablePartitioning": false,
+    "SupportOrdering": true,
+    "EnableBatchedOperations": true,
+    "UserMetadata": null
+  },
+  {
+    "DefaultMessageTimeToLive": "14.00:00:00",
+    "AutoDeleteOnIdle": "10675199.02:48:05.4775807",
+    "MaxSizeInMegabytes": 1024,
+    "RequiresDuplicateDetection": false,
+    "DuplicateDetectionHistoryTimeWindow": "00:10:00",
+    "Name": "ev7pendingaccount",
+    "AuthorizationRules": [],
+    "Status": {},
+    "EnablePartitioning": false,
+    "SupportOrdering": true,
+    "EnableBatchedOperations": true,
+    "UserMetadata": null
+  },
+  {
+    "DefaultMessageTimeToLive": "14.00:00:00",
+    "AutoDeleteOnIdle": "10675199.02:48:05.4775807",
+    "MaxSizeInMegabytes": 1024,
+    "RequiresDuplicateDetection": false,
+    "DuplicateDetectionHistoryTimeWindow": "00:10:00",
+    "Name": "ev8customerupdated.topic",
+    "AuthorizationRules": [
+      {
+        "ClaimType": "SharedAccessKey",
+        "KeyName": "ManageKey",
+        "PrimaryKey": "pi+UHcS7IeLWAgdq11exwfsmQ/IA83nvIGeOQ0CJgCk=",
+        "SecondaryKey": "KocOnRBiw62VJb0w2HIMk9QDVp1oUQf2O1ANB0LeGeY=",
+        "Rights": [ 0, 1, 2 ],
+        "CreatedTime": "2020-09-21T23:56:56.912301+00:00",
+        "ModifiedTime": "2020-09-21T23:56:56.912301+00:00"
+      }
+    ],
+    "Status": {},
+    "EnablePartitioning": false,
+    "SupportOrdering": true,
+    "EnableBatchedOperations": true,
+    "UserMetadata": null
+  },
+  {
+    "DefaultMessageTimeToLive": "14.00:00:00",
+    "AutoDeleteOnIdle": "10675199.02:48:05.4775807",
+    "MaxSizeInMegabytes": 1024,
+    "RequiresDuplicateDetection": false,
+    "DuplicateDetectionHistoryTimeWindow": "00:10:00",
+    "Name": "mytestemailev32",
+    "AuthorizationRules": [],
+    "Status": {},
+    "EnablePartitioning": false,
+    "SupportOrdering": true,
+    "EnableBatchedOperations": true,
+    "UserMetadata": null
+  },
+  {
+    "DefaultMessageTimeToLive": "14.00:00:00",
+    "AutoDeleteOnIdle": "10675199.02:48:05.4775807",
+    "MaxSizeInMegabytes": 1024,
+    "RequiresDuplicateDetection": false,
+    "DuplicateDetectionHistoryTimeWindow": "00:10:00",
+    "Name": "t24events.topic",
+    "AuthorizationRules": [
+      {
+        "ClaimType": "SharedAccessKey",
+        "KeyName": "ManageKey",
+        "PrimaryKey": "x7APzJf3vJNhsGlPB+p78142ga+g+q9AXF0frSJMbV0=",
+        "SecondaryKey": "5XCEwSuXQcOC1QyTkQtTjoSGlgfWRn+fP4RcHPGDeFY=",
+        "Rights": [ 0, 1, 2 ],
+        "CreatedTime": "2020-10-13T03:10:49.8558298+00:00",
+        "ModifiedTime": "2020-10-13T03:10:49.8558298+00:00"
+      }
+    ],
+    "Status": {},
+    "EnablePartitioning": false,
+    "SupportOrdering": true,
+    "EnableBatchedOperations": true,
+    "UserMetadata": null
+  }
+]

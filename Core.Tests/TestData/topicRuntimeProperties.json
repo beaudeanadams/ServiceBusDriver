@@ -1,0 +1,101 @@
+[
+  {
+    "Name": "topic1.topic",
+    "AccessedAt": "2021-11-06T05:25:52.5854137+00:00",
+    "CreatedAt": "2020-09-22T08:54:48.7240599+00:00",
+    "UpdatedAt": "2021-11-02T22:50:36.4991176+00:00",
+    "SizeInBytes": 6031361,
+    "SubscriptionCount": 6,
+    "ScheduledMessageCount": 0
+  },
+  {
+    "Name": "topic2.topic",
+    "AccessedAt": "2021-11-06T05:25:52.5854137+00:00",
+    "CreatedAt": "2020-10-23T01:42:56.6652593+00:00",
+    "UpdatedAt": "2021-11-05T02:46:16.1997491+00:00",
+    "SizeInBytes": 5291200,
+    "SubscriptionCount": 2,
+    "ScheduledMessageCount": 0
+  },
+  {
+    "Name": "topic3.topic",
+    "AccessedAt": "2021-11-06T05:25:52.5854137+00:00",
+    "CreatedAt": "2021-01-21T05:09:46.2024604+00:00",
+    "UpdatedAt": "2021-11-05T02:46:16.6372339+00:00",
+    "SizeInBytes": 1634966,
+    "SubscriptionCount": 2,
+    "ScheduledMessageCount": 0
+  },
+  {
+    "Name": "topic4.topic",
+    "AccessedAt": "2021-11-06T05:25:52.5854137+00:00",
+    "CreatedAt": "2020-09-22T09:34:57.5497643+00:00",
+    "UpdatedAt": "2021-11-01T06:53:18.9526036+00:00",
+    "SizeInBytes": 9483420,
+    "SubscriptionCount": 2,
+    "ScheduledMessageCount": 0
+  },
+  {
+    "Name": "topic5.topic",
+    "AccessedAt": "2021-11-06T05:25:52.5854137+00:00",
+    "CreatedAt": "2020-09-22T09:19:37.1532701+00:00",
+    "UpdatedAt": "2021-10-28T01:42:50.9156855+00:00",
+    "SizeInBytes": 71960511,
+    "SubscriptionCount": 7,
+    "ScheduledMessageCount": 0
+  },
+  {
+    "Name": "topic6.topic",
+    "AccessedAt": "2021-11-06T05:25:52.5854137+00:00",
+    "CreatedAt": "2020-10-22T00:29:55.9641626+00:00",
+    "UpdatedAt": "2021-10-21T04:26:56.4792184+00:00",
+    "SizeInBytes": 171851024,
+    "SubscriptionCount": 2,
+    "ScheduledMessageCount": 0
+  },
+  {
+    "Name": "topic7.topic",
+    "AccessedAt": "2021-11-06T05:25:52.5854137+00:00",
+    "CreatedAt": "2020-09-27T22:18:57.6332552+00:00",
+    "UpdatedAt": "2021-11-01T06:53:16.530497+00:00",
+    "SizeInBytes": 205922475,
+    "SubscriptionCount": 8,
+    "ScheduledMessageCount": 0
+  },
+  {
+    "Name": "topic8.topic",
+    "AccessedAt": "2021-11-06T05:25:52.5854137+00:00",
+    "CreatedAt": "2020-09-22T23:38:24.7268025+00:00",
+    "UpdatedAt": "2021-11-06T00:54:42.6890036+00:00",
+    "SizeInBytes": 101810351,
+    "SubscriptionCount": 10,
+    "ScheduledMessageCount": 0
+  },
+  {
+    "Name": "topic9.topic",
+    "AccessedAt": "2021-11-06T05:25:52.5854137+00:00",
+    "CreatedAt": "2020-09-23T04:17:58.585405+00:00",
+    "UpdatedAt": "2021-11-01T06:53:17.4211412+00:00",
+    "SizeInBytes": 214078369,
+    "SubscriptionCount": 6,
+    "ScheduledMessageCount": 0
+  },
+  {
+    "Name": "topic10.topic",
+    "AccessedAt": "2021-11-06T05:25:52.5854137+00:00",
+    "CreatedAt": "2020-09-23T04:17:58.538529+00:00",
+    "UpdatedAt": "2021-10-19T06:45:44.0577842+00:00",
+    "SizeInBytes": 2665496,
+    "SubscriptionCount": 5,
+    "ScheduledMessageCount": 0
+  },
+  {
+    "Name": "topic11.topic",
+    "AccessedAt": "2021-11-06T05:25:52.5854137+00:00",
+    "CreatedAt": "2020-10-13T03:10:47.4363972+00:00",
+    "UpdatedAt": "2021-10-28T01:42:50.7906773+00:00",
+    "SizeInBytes": 879221,
+    "SubscriptionCount": 12,
+    "ScheduledMessageCount": 0
+  }
+]

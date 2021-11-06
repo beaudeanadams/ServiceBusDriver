@@ -1,13 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
-using Azure.Messaging.ServiceBus;
+﻿using Azure.Messaging.ServiceBus;
 using Microsoft.Extensions.Logging;
 using ServiceBusDriver.Core.Constants;
 using ServiceBusDriver.Core.Models.Errors;
 using ServiceBusDriver.Core.Models.Features.Instance;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace ServiceBusDriver.Core.Components.Instance
 {
@@ -29,7 +29,7 @@ namespace ServiceBusDriver.Core.Components.Instance
 
             var sbInstances = await ListInstancesFull(cancellationToken);
 
-            var instances = sbInstances.Select(i => new InstanceResponse {Id = i.Id, Name = i.Name})
+            var instances = sbInstances.Select(i => new InstanceResponse { Id = i.Id, Name = i.Name })
                 .ToList();
 
             _logger.LogInformation("Fetched {0} instances", instances.Count);
@@ -63,11 +63,11 @@ namespace ServiceBusDriver.Core.Components.Instance
         {
             _logger.LogTrace("Start {0}", nameof(GetInstance));
 
-            var sbInstance = await GetInstanceFull(id);
+            var sbInstance = await GetInstanceFull(id, cancellationToken).ConfigureAwait(false);
             var instance = new InstanceResponse();
             if (sbInstance != null)
             {
-                instance = new InstanceResponse {Id = sbInstance.Id, Name = sbInstance.Name};
+                instance = new InstanceResponse { Id = sbInstance.Id, Name = sbInstance.Name };
                 _logger.LogInformation("Fetched instance with Id {0}", sbInstance.Id);
             }
             else
