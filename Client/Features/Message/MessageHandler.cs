@@ -96,7 +96,7 @@ namespace ServiceBusDriver.Client.Features.Message
                 { ApiConstants.QueryConstants.MaxMessages, maxMessages.ToString() }
             };
 
-            var url = StringExtensions.AddQueryStringWithoutNullCheck(ApiConstants.PathConstants.GetActiveMessages, queryParams);
+            var url = StringExtensions.AddQueryStringWithoutNullCheck(ApiConstants.PathConstants.GetDeadLetterMessages, queryParams);
 
             var response = await _httpClient.GetFromJsonAsync<List<MessageResponseDto>>(url);
 

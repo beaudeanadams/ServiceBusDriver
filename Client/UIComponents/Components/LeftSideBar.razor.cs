@@ -116,8 +116,14 @@ namespace ServiceBusDriver.Client.UIComponents.Components
                     _propertiesSpinner = true;
                     _instanceIdSelectBox = e.Value.ToString();
 
-                    _topics = await _topicHandler.GetTopicsInInstance(_instanceIdSelectBox);
-                    _queues = await _queueHandler.GetQueuesInInstance(_instanceIdSelectBox);
+                    var topicFetchTask = _topicHandler.GetTopicsInInstance(_instanceIdSelectBox);
+                    var queueFetchTask = _queueHandler.GetQueuesInInstance(_instanceIdSelectBox);
+
+                    await Task.WhenAll(topicFetchTask, queueFetchTask);
+
+                    _topics = topicFetchTask.Result;
+                    _queues = queueFetchTask.Result;
+
                     await SetDefaultUiValuesForSubscription();
                     _propertiesSpinner = false;
                     StateHasChanged();
