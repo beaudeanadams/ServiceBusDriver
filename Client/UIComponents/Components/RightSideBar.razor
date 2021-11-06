@@ -13,27 +13,52 @@
 
 <div class="flex-grow-0 flex-shrink w-1/5 px-4 w-fixed">
     <div class="flex px-2 sm:flex-col">
-        @if (_propertiesNotifierService.TopicProperties.Count>0)
+        @if (_propertiesNotifierService.TopicProperties.Count>0 || _propertiesNotifierService.QueueProperties.Count>0)
         {
             <div class="sticky w-full mb-3 border bg-gray-50 rounded-xl overflow-y-auto height-auto" style="padding: 5%; max-height: 300px;">
 
                 <div class="pb-5 border-b border-gray-200">
-                    <h3 class="text-lg leading-6 font-medium text-gray-900">
-                        Topic Properties
-                    </h3>
+                    @if (_propertiesNotifierService.TopicProperties.Count > 0)
+                    {
+                        <h3 class="text-lg leading-6 font-medium text-gray-900">
+                            Topic Properties
+                        </h3>
+                    }
+                    else
+                    {
+                        <h3 class="text-lg leading-6 font-medium text-gray-900">
+                            Queue Properties
+                        </h3>
+                    }
                 </div>
                 <div class="">
 
                     <div class="flex flex-col flex-grow w-5/5">
                         <ul>
-                            @foreach (var (key, value) in _propertiesNotifierService.TopicProperties)
+                            @if (_propertiesNotifierService.TopicProperties.Count > 0)
                             {
-                                if (@value.IsNotNullOrWhitespace())
+                                @foreach (var (key, value) in _propertiesNotifierService.TopicProperties)
                                 {
-                                    <li>
-                                        <label class="mb-2 text-gray-700">@key</label>
-                                        <label class="mb-2 text-gray-700 block font-semibold" style="color: green;">@value</label>
-                                    </li>
+                                    if (@value.IsNotNullOrWhitespace())
+                                    {
+                                        <li>
+                                            <label class="mb-2 text-gray-700">@key</label>
+                                            <label class="mb-2 text-gray-700 block font-semibold" style="color: green;">@value</label>
+                                        </li>
+                                    }
+                                }
+                            }
+                            else
+                            {
+                                @foreach (var (key, value) in _propertiesNotifierService.QueueProperties)
+                                {
+                                    if (@value.IsNotNullOrWhitespace())
+                                    {
+                                        <li>
+                                            <label class="mb-2 text-gray-700">@key</label>
+                                            <label class="mb-2 text-gray-700 block font-semibold" style="color: green;">@value</label>
+                                        </li>
+                                    }
                                 }
                             }
                         </ul>

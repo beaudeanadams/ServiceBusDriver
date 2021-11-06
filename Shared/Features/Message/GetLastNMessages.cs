@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using MediatR;
 using ServiceBusDriver.Core.Constants;
-using ServiceBusDriver.Shared.Features.Message;
 
-namespace ServiceBusDriver.Shared.Features.Subscription
+namespace ServiceBusDriver.Shared.Features.Message
 {
     public class GetLastNMessages : IRequest<List<MessageResponseDto>>
     {
+        public string QueueName { get; set; }
         public string InstanceId { get; set; }
         public string SubscriptionName { get; set; }
         public string TopicName { get; set; }

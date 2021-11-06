@@ -34,53 +34,6 @@ namespace ServiceBusDriver.Server.Features.Subscription
             return Ok(result);
         }
 
-        [HttpGet]
-        [Route("messages")]
-        [Produces("application/json")]
-        public async Task<ActionResult> GetActiveMessages([FromQuery] GetActiveMessagesRequest request)
-        {
-
-            Guarantee.NotNull(request);
-            Guarantee.NotNull(request.SubscriptionName);
-            Guarantee.NotNull(request.InstanceId);
-            Guarantee.NotNull(request.TopicName);
-
-            var result = await _mediator.Send(request);
-
-            return Ok(result);
-        }
-
-        [HttpGet]
-        [Route("messages/last/{limit}")]
-        [Produces("application/json")]
-        public async Task<ActionResult> GetLastNMessages([FromQuery] GetLastNMessages request, [FromRoute] int limit)
-        {
-            Guarantee.NotNull(request);
-            Guarantee.NotNull(request.SubscriptionName);
-            Guarantee.NotNull(request.InstanceId);
-            Guarantee.NotNull(request.TopicName);
-
-            request.Limit = limit;
-            var result = await _mediator.Send(request);
-
-            return Ok(result);
-        }
-
-
-        [HttpGet]
-        [Route("messages/deadletter")]
-        [Produces("application/json")]
-        public async Task<ActionResult> GetDeadLetterMessages([FromQuery] GetDeadLetteredMessagesRequest request)
-        {
-
-            Guarantee.NotNull(request);
-            Guarantee.NotNull(request.SubscriptionName);
-            Guarantee.NotNull(request.InstanceId);
-            Guarantee.NotNull(request.TopicName);
-
-            var result = await _mediator.Send(request);
-
-            return Ok(result);
-        }
+       
     }
 }

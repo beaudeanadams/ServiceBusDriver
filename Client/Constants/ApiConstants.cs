@@ -26,14 +26,16 @@
             public const string AddInstance = "api/instance";
             public const string ListInstances = "api/instance/list";
             public const string GetTopicsInInstance = "api/instance/{0}/topics";
+            public const string GetQueuesInInstance = "api/instance/{0}/queues";
             
             public const string GetTopic = "api/topic/get";
+            public const string GetQueue = "api/queue/get";
             public const string GetSubscriptionsInTopic = "api/topic/subscriptions";
             
             public const string GetSubscription = "api/subscription/get";
-            public const string GetActiveMessages = "api/subscription/messages";
-            public const string GetDeadLetterMessages = "api/subscription/messages/deadletter";
-            public const string GetLastNMessages = "api/subscription/messages/last/{0}";
+            public const string GetActiveMessages = "api/message/active";
+            public const string GetDeadLetterMessages = "api/message/deadletter";
+            public const string GetLastNMessages = "api/message/last/{0}";
             public const string SearchMessages = "api/message/search";
         }
 
@@ -42,6 +44,7 @@
         {
             public const string InstanceId = "instanceId";
             public const string TopicName = "topicName";
+            public const string QueueName = "queueName";
             public const string SubscriptionName = "subscriptionName";
             public const string MaxMessages = "maxMessages";
             public const string DeadLetterQueue = "deadLetterQueue";
@@ -50,7 +53,7 @@
         public static class MessagesConstants
         {
             public const int PreFetchCount = 250;
-            public const int MaxMessaes = 250;
+            public const int MaxMessages = 250;
             public const int DefaultMessageLimit = 10;
         }
 
@@ -58,6 +61,7 @@
         {
             public const string GenericError = "Unknown Error Occured. Please refresh and try again";
             public const string InstanceAndTopicNotFound = "Instance and Topic should be selected";
+            public const string InstanceAndQueueNotFound = "Instance and Queue should be selected";
         }
 
     }

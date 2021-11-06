@@ -7,6 +7,7 @@ namespace ServiceBusDriver.Client.Services
     public class PropertiesNotifierService
     {
         public IReadOnlyDictionary<string, string> TopicProperties { get; private set; } = new Dictionary<string, string>();
+        public IReadOnlyDictionary<string, string> QueueProperties { get; private set; } = new Dictionary<string, string>();
         public IReadOnlyDictionary<string, string> SubscriptionProperties { get; private set; } = new Dictionary<string, string>();
         public IReadOnlyDictionary<string, string> MessageProperties { get; private set; } = new Dictionary<string, string>();
 
@@ -25,7 +26,17 @@ namespace ServiceBusDriver.Client.Services
             }
 
         }
-        
+
+        public async Task SetQueueProperties(Dictionary<string, string> properties)
+        {
+            QueueProperties = properties;
+
+            if (Notify != null)
+            {
+                await Notify?.Invoke();
+            }
+        }
+
         public async Task SetSubscriptionProperties(Dictionary<string, string> properties)
         {
             SubscriptionProperties = properties;

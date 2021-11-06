@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.WebUtilities;
 using Newtonsoft.Json;
 using ServiceBusDriver.Client.Constants;
 using ServiceBusDriver.Shared.Features.Message;
+using ServiceBusDriver.Shared.Tools;
 
 namespace ServiceBusDriver.Client.Features.Message
 {
@@ -15,18 +16,21 @@ namespace ServiceBusDriver.Client.Features.Message
     {
         Task<List<MessageResponseDto>> GetActiveMessages(
             string instanceId,
+            string queueName,
             string topicName,
             string subscriptionName,
-            int maxMessages = ApiConstants.MessagesConstants.MaxMessaes);
+            int maxMessages = ApiConstants.MessagesConstants.MaxMessages);
 
         Task<List<MessageResponseDto>> GetDeadLetterMessages(
             string instanceId,
+            string queueName,
             string topicName,
             string subscriptionName,
-            int maxMessages = ApiConstants.MessagesConstants.MaxMessaes);
+            int maxMessages = ApiConstants.MessagesConstants.MaxMessages);
 
         Task<List<MessageResponseDto>> GetLastNMessages(
             string instanceId,
+            string queueName,
             string topicName,
             string subscriptionName,
             bool deadLetterQueue = false,
@@ -34,6 +38,7 @@ namespace ServiceBusDriver.Client.Features.Message
 
         Task<List<MessageResponseDto>> SearchMessages(
            string instanceId,
+           string queueName,
            string topicName,
            string subscriptionName,
            string searchKey,
@@ -53,20 +58,22 @@ namespace ServiceBusDriver.Client.Features.Message
 
         public async Task<List<MessageResponseDto>> GetActiveMessages(
             string instanceId,
+            string queueName,
             string topicName,
             string subscriptionName,
-            int maxMessages = ApiConstants.MessagesConstants.MaxMessaes)
+            int maxMessages = ApiConstants.MessagesConstants.MaxMessages)
         {
 
             var queryParams = new Dictionary<string, string>
             {
                 { ApiConstants.QueryConstants.InstanceId, instanceId },
+                { ApiConstants.QueryConstants.QueueName, queueName },
                 { ApiConstants.QueryConstants.TopicName, topicName },
                 { ApiConstants.QueryConstants.SubscriptionName, subscriptionName },
                 { ApiConstants.QueryConstants.MaxMessages, maxMessages.ToString() }
             };
 
-            var url = QueryHelpers.AddQueryString(ApiConstants.PathConstants.GetActiveMessages, queryParams);
+            var url = StringExtensions.AddQueryStringWithoutNullCheck(ApiConstants.PathConstants.GetActiveMessages, queryParams);
 
             var response = await _httpClient.GetFromJsonAsync<List<MessageResponseDto>>(url);
 
@@ -75,19 +82,21 @@ namespace ServiceBusDriver.Client.Features.Message
 
         public async Task<List<MessageResponseDto>> GetDeadLetterMessages(
             string instanceId,
+            string queueName,
             string topicName,
             string subscriptionName,
-            int maxMessages = ApiConstants.MessagesConstants.MaxMessaes)
+            int maxMessages = ApiConstants.MessagesConstants.MaxMessages)
         {
             var queryParams = new Dictionary<string, string>
             {
                 { ApiConstants.QueryConstants.InstanceId, instanceId },
+                { ApiConstants.QueryConstants.QueueName, queueName },
                 { ApiConstants.QueryConstants.TopicName, topicName },
                 { ApiConstants.QueryConstants.SubscriptionName, subscriptionName },
                 { ApiConstants.QueryConstants.MaxMessages, maxMessages.ToString() }
             };
 
-            var url = QueryHelpers.AddQueryString(ApiConstants.PathConstants.GetDeadLetterMessages, queryParams);
+            var url = StringExtensions.AddQueryStringWithoutNullCheck(ApiConstants.PathConstants.GetActiveMessages, queryParams);
 
             var response = await _httpClient.GetFromJsonAsync<List<MessageResponseDto>>(url);
 
@@ -96,6 +105,7 @@ namespace ServiceBusDriver.Client.Features.Message
 
         public async Task<List<MessageResponseDto>> GetLastNMessages(
             string instanceId,
+            string queueName,
             string topicName,
             string subscriptionName,
             bool deadLetterQueue = false,
@@ -104,45 +114,33 @@ namespace ServiceBusDriver.Client.Features.Message
             var queryParams = new Dictionary<string, string>
             {
                 { ApiConstants.QueryConstants.InstanceId, instanceId },
+                { ApiConstants.QueryConstants.QueueName, queueName },
                 { ApiConstants.QueryConstants.TopicName, topicName },
                 { ApiConstants.QueryConstants.SubscriptionName, subscriptionName },
                 { ApiConstants.QueryConstants.DeadLetterQueue, deadLetterQueue.ToString() }
             };
 
             var path = string.Format(ApiConstants.PathConstants.GetLastNMessages, limit);
-            var url = QueryHelpers.AddQueryString(path, queryParams);
-            try
-            {
-                var response = await _httpClient.GetFromJsonAsync<List<MessageResponseDto>>(url);
+            var url = StringExtensions.AddQueryStringWithoutNullCheck(path, queryParams);
+            var response = await _httpClient.GetFromJsonAsync<List<MessageResponseDto>>(url);
 
-                return response;
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            return response;
         }
 
         public async Task<List<MessageResponseDto>> SearchMessages(
           string instanceId,
+          string queueName,
           string topicName,
           string subscriptionName,
           string searchKey,
           string value,
           bool deadLetterQueue = false)
         {
-            var queryParams = new Dictionary<string, string>
-            {
-                { ApiConstants.QueryConstants.InstanceId, instanceId },
-                { ApiConstants.QueryConstants.TopicName, topicName },
-                { ApiConstants.QueryConstants.SubscriptionName, subscriptionName },
-                { ApiConstants.QueryConstants.DeadLetterQueue, deadLetterQueue.ToString() }
-            };
-
             var searchRequest = new SearchRequest
             {
                 InstanceId = instanceId,
                 TopicName = topicName,
+                QueueName = queueName,
                 SubscriptionName = subscriptionName,
                 SearchDeadLetter = deadLetterQueue,
                 KeyPath = string.IsNullOrWhiteSpace(searchKey) ? null : searchKey,
