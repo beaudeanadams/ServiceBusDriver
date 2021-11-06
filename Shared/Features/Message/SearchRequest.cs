@@ -7,6 +7,7 @@ namespace ServiceBusDriver.Shared.Features.Message
     public class SearchRequest : IRequest<List<MessageResponseDto>>
     {
         public string InstanceId { get; set; }
+        public string QueueName { get; set; }
         public string TopicName { get; set; }
         public string SubscriptionName { get; set; }
         public bool SearchDeadLetter { get; set; }

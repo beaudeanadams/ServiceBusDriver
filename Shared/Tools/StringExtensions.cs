@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text;
+using System.Text.Encodings.Web;
 using System.Xml;
 using System.Xml.Linq;
 using Newtonsoft.Json.Linq;
@@ -127,6 +129,57 @@ namespace ServiceBusDriver.Shared.Tools
             {
                 return false;
             }
+        }
+
+        /// <summary>
+        /// Append the given query keys and values to the uri. Taken from QueryHelpers
+        /// </summary>
+        /// <param name="uri">The base uri.</param>
+        /// <param name="queryString">A collection of name value query pairs to append.</param>
+        /// <returns>The combined result.</returns>
+        public static string AddQueryStringWithoutNullCheck(
+            string uri,
+            IEnumerable<KeyValuePair<string, string>> queryString)
+        {
+            if (uri == null)
+            {
+                throw new ArgumentNullException(nameof(uri));
+            }
+
+            if (queryString == null)
+            {
+                throw new ArgumentNullException(nameof(queryString));
+            }
+
+            var anchorIndex = uri.IndexOf('#');
+            var uriToBeAppended = uri;
+            var anchorText = "";
+            // If there is an anchor, then the query string must be inserted before its first occurence.
+            if (anchorIndex != -1)
+            {
+                anchorText = uri[anchorIndex..];
+                uriToBeAppended = uri[..anchorIndex];
+            }
+
+            var queryIndex = uriToBeAppended.IndexOf('?');
+            var hasQuery = queryIndex != -1;
+
+            var sb = new StringBuilder();
+            sb.Append(uriToBeAppended);
+            foreach (var parameter in queryString)
+            {
+                if (parameter.Value != null)
+                {
+                    sb.Append(hasQuery ? '&' : '?');
+                    sb.Append(UrlEncoder.Default.Encode(parameter.Key));
+                    sb.Append('=');
+                    sb.Append(UrlEncoder.Default.Encode(parameter.Value));
+                    hasQuery = true;
+                }
+            }
+
+            sb.Append(anchorText);
+            return sb.ToString();
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿@inject IInstanceHandler _instanceHandler
 @inject ITopicHandler _topicHandler
+@inject IQueueHandler _queueHandler
 @inject ISubscriptionHandler _subscriptionHandler
 @inject IMessageHandler _messageHandler
 @inject ITraceLogsNotifier _traceLogsNotifier
@@ -10,6 +11,7 @@
 @using Microsoft.Extensions.Logging
 @using ServiceBusDriver.Client.Features.Instance
 @using ServiceBusDriver.Client.Features.Message
+@using ServiceBusDriver.Client.Features.Queue
 @using ServiceBusDriver.Client.Features.Subscription
 @using ServiceBusDriver.Client.Features.Topic
 @using ServiceBusDriver.Client.Services
@@ -41,7 +43,6 @@ else
         }
     </div>
 
-    <hr style="padding-bottom: 2%; margin-top: 5px;">
     <div class="flex">
         <div class="flex flex-col flex-grow w-2/5">
             <label for="instance" class="mb-2 block font-semibold text-gray-700"> Select Instance</label>
@@ -62,64 +63,115 @@ else
                 }
             </select>
         </div>
-        <span>&nbsp;</span>
-        <div class="flex flex-col flex-grow w-2/5">
-            <label for="topic" class="mb-2 block font-semibold text-gray-700"> Select Topic</label>
-            <select id="topic" name="topic" autocomplete="topic" class="border w-full p-3" disabled="@(_topics == null)"
-                    @onchange="@OnTopicsValueChanged" @key="@_topics">
-
-                @if (_topics != null)
-                {
-                    <option value="">Select Topic</option>
-                    @foreach (var topic in _topics)
-                    {
-                        <option value="@topic?.Name" @key="@topic">@topic?.Name</option>
-                    }
-                }
-                else
-                {
-                    <option value="">Loading Topic</option>
-                }
-            </select>
-        </div>
     </div>
+
+    <hr style="padding-bottom: 2%; margin-top: 5px;">
 
     <div class="flex">
         <div class="flex flex-col flex-grow w-2/5">
-            <label for="subscription" class="mb-2 block font-semibold text-gray-700"> Select Subscription</label>
-            <select id="subscription" name="subscription" autocomplete="subscription" class="border w-full p-3"
-                    @onchange="@OnSubscriptionValueChanged" @key="@_subscriptions" disabled="@(_topics == null || _topicNameSelectBox == null || _subscriptions == null)">
+            <label class="mb-2 block font-semibold text-gray-700" style="font-size: 15px !important;">
+                <input type="radio" checked name="featureType" class="form-checkbox rounded text-pink-500" @onchange="@(() => UpdateFeatureType(false))"/>
+                Topics
+            </label>
 
-                @if (_subscriptions != null)
-                {
-                    <option value="">Select Subscription</option>
-                    @foreach (var subscription in _subscriptions)
-                    {
-                        var subsName = $"{subscription.SubscriptionName} [{subscription.SubscriptionStats.ActiveMessageCount},{subscription.SubscriptionStats.DeadLetterMessageCount}]";
+        </div>
+        <span>&nbsp;</span>
+        <div class="flex flex-col flex-grow w-2/5">
+            <label class="mb-2 block font-semibold text-gray-700" style="font-size: 15px !important;">
+                <input type="radio" name="featureType" class="form-checkbox rounded text-pink-500" @onchange="@(() => UpdateFeatureType(true))"/>
+                Queues
+            </label>
 
-                        <option value="@subscription.SubscriptionName" @key="@subscription">@subsName</option>
-                    }
-                }
-                else
-                {
-                    <option value="">Loading Subscription</option>
-                }
-            </select>
         </div>
     </div>
 
-    @if (_subscriptionNameSelectBox != null)
+    @if (!_featureIsQueue)
     {
         <div class="flex">
             <div class="flex flex-col flex-grow w-2/5">
-                <label for="lblactivemsgs" class="mb-2 block font-semibold text-gray-700">
+                <label for="topic" class="mb-2 block font-semibold text-gray-700"> Select Topic</label>
+                <select id="topic" name="topic" autocomplete="topic" class="border w-full p-3" disabled="@(_topics == null)"
+                        @onchange="@OnTopicsValueChanged" @key="@_topics">
+
+                    @if (_topics != null)
+                    {
+                        <option value="">Select Topic</option>
+                        @foreach (var topic in _topics)
+                        {
+                            <option value="@topic?.Name" @key="@topic">@topic?.Name</option>
+                        }
+                    }
+                    else
+                    {
+                        <option value="">Select Instance First</option>
+                    }
+                </select>
+            </div>
+        </div>
+
+        <div class="flex">
+            <div class="flex flex-col flex-grow w-2/5">
+                <label for="subscription" class="mb-2 block font-semibold text-gray-700"> Select Subscription</label>
+                <select id="subscription" name="subscription" autocomplete="subscription" class="border w-full p-3"
+                        @onchange="@OnSubscriptionValueChanged" @key="@_subscriptions" disabled="@(_topics == null || _topicNameSelectBox == null || _subscriptions == null)">
+
+                    @if (_subscriptions != null)
+                    {
+                        <option value="">Select Subscription</option>
+                        @foreach (var subscription in _subscriptions)
+                        {
+                            var subsName = $"{subscription.SubscriptionName} [{subscription.SubscriptionStats.ActiveMessageCount},{subscription.SubscriptionStats.DeadLetterMessageCount}]";
+
+                            <option value="@subscription.SubscriptionName" @key="@subscription">@subsName</option>
+                        }
+                    }
+                    else
+                    {
+                        <option value="">Select Topic First</option>
+                    }
+                </select>
+            </div>
+        </div>
+    }
+    else
+    {
+        <div class="flex">
+            <div class="flex flex-col flex-grow w-2/5">
+                <label for="queue" class="mb-2 block font-semibold text-gray-700"> Select Queue</label>
+                <select id="queue" name="queue" autocomplete="queue" class="border w-full p-3" disabled="@(_queues == null)"
+                        @onchange="@OnQueueValueChanged" @key="@_queues">
+
+                    @if (_queues != null)
+                    {
+                        <option value="">Select Queue</option>
+                        @foreach (var queue in _queues)
+                        {
+                            var queueName = $"{queue.Name} [{queue.QueueStats.ActiveMessageCount},{queue.QueueStats.DeadLetterMessageCount}]";
+
+                            <option value="@queue?.Name" @key="@queue">@queueName</option>
+                        }
+                    }
+                    else
+                    {
+                        <option value="">Select Instance First</option>
+                    }
+                </select>
+            </div>
+        </div>
+    }
+
+    @if (_subscriptionNameSelectBox != null || _queueNameSelectBox!=null)
+    {
+        <div class="flex">
+            <div class="flex flex-col flex-grow w-2/5">
+                <label class="mb-2 block font-semibold text-gray-700">
                     Active Messages:
                     <span style="color: green;">@_activeMsgsText</span>
                 </label>
             </div>
             <span>&nbsp;</span>
             <div class="flex flex-col flex-grow w-2/5">
-                <label for="lbldeadletters" class="mb-2 block font-semibold text-gray-700"> Dead Letters: <span style="color: green;">@_deadLetterTxt</span></label>
+                <label class="mb-2 block font-semibold text-gray-700"> Dead Letters: <span style="color: green;">@_deadLetterTxt</span></label>
             </div>
         </div>
 
@@ -171,7 +223,7 @@ else
 }
 
 <br/> <br/>
-@if (_subscriptionNameSelectBox != null)
+@if (_subscriptionNameSelectBox != null || _queueNameSelectBox!=null)
 {
     <p class="text-lg leading-6 font-medium text-gray-900">Peek Messages</p>
     <hr style="padding-bottom: 2%; margin-top: 5px;">
@@ -243,7 +295,7 @@ else
     </div>
 }
 <br/> <br/>
-@if (_subscriptionNameSelectBox != null)
+@if (_subscriptionNameSelectBox != null || _queueNameSelectBox!=null)
 {
     <p class="text-lg leading-6 font-medium text-gray-900">Search Conditions</p>
     <hr style="padding-bottom: 2%; margin-top: 5px;">

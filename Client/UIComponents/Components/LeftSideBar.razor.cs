@@ -9,6 +9,7 @@ using ServiceBusDriver.Client.Constants;
 using ServiceBusDriver.Client.Services;
 using ServiceBusDriver.Shared.Features.Instance;
 using ServiceBusDriver.Shared.Features.Message;
+using ServiceBusDriver.Shared.Features.Queue;
 using ServiceBusDriver.Shared.Features.Subscription;
 using ServiceBusDriver.Shared.Features.Topic;
 using ServiceBusDriver.Shared.Features.Trace;
@@ -20,6 +21,7 @@ namespace ServiceBusDriver.Client.UIComponents.Components
     {
         private List<InstanceResponseDto> _instances;
         private List<TopicResponseDto> _topics;
+        private List<QueueResponseDto> _queues;
         private List<SubscriptionResponseDto> _subscriptions;
         private SubscriptionResponseDto _subscriptionDetails;
         private List<MessageResponseDto> _messages;
@@ -28,6 +30,7 @@ namespace ServiceBusDriver.Client.UIComponents.Components
         //Select Boxes
         private string _instanceIdSelectBox;
         private string _topicNameSelectBox;
+        private string _queueNameSelectBox;
         private string _subscriptionNameSelectBox;
 
         //Spinners
@@ -46,6 +49,7 @@ namespace ServiceBusDriver.Client.UIComponents.Components
         private string _searchKeyInput;
         private bool _searchActiveQueueRadio = true;
         private bool _searchDlQueueRadio = false;
+        private bool _featureIsQueue = false;
 
         // Peek Counts
         private int _activeMsgCountInput;
@@ -86,6 +90,13 @@ namespace ServiceBusDriver.Client.UIComponents.Components
             await _propertiesNotifierService.SetTopicProperties(new Dictionary<string, string>());
         }
 
+        private async Task SetDefaultUiValuesForQueue()
+        {
+            _queues = null;
+            _queueNameSelectBox = null;
+            await _propertiesNotifierService.SetTopicProperties(new Dictionary<string, string>());
+        }
+
         private async Task GetAllInstance()
         {
             _traceLogsNotifier.AddToQueue(new TraceModel("Initiate instance fetch")).SafeFireAndForget();
@@ -98,6 +109,7 @@ namespace ServiceBusDriver.Client.UIComponents.Components
             try
             {
                 await SetDefaultUiValuesForTopic();
+                await SetDefaultUiValuesForQueue();
                 StateHasChanged();
                 if (e.Value != null && !e.Value.ToString().IsNullOrEmpty())
                 {
@@ -105,6 +117,7 @@ namespace ServiceBusDriver.Client.UIComponents.Components
                     _instanceIdSelectBox = e.Value.ToString();
 
                     _topics = await _topicHandler.GetTopicsInInstance(_instanceIdSelectBox);
+                    _queues = await _queueHandler.GetQueuesInInstance(_instanceIdSelectBox);
                     await SetDefaultUiValuesForSubscription();
                     _propertiesSpinner = false;
                     StateHasChanged();
@@ -116,10 +129,18 @@ namespace ServiceBusDriver.Client.UIComponents.Components
             }
         }
 
+        // Toggle between Topics or Queues
+        private void UpdateFeatureType(bool isQueue)
+        {
+            _featureIsQueue = isQueue;
+        }
+
         private async void OnTopicsValueChanged(ChangeEventArgs e)
         {
             try
             {
+                _queueNameSelectBox = null;
+                await _propertiesNotifierService.SetQueueProperties(new Dictionary<string, string>());
                 await SetDefaultUiValuesForSubscription();
                 StateHasChanged();
 
@@ -149,6 +170,39 @@ namespace ServiceBusDriver.Client.UIComponents.Components
             }
         }
 
+        private async void OnQueueValueChanged(ChangeEventArgs e)
+        {
+            try
+            {
+                _topicNameSelectBox = null;
+                await _propertiesNotifierService.SetTopicProperties(new Dictionary<string, string>());
+                await SetDefaultUiValuesForSubscription();
+                StateHasChanged();
+
+                if (e.Value != null && e.Value.ToString().IsNotNullOrWhitespace())
+                {
+                    _propertiesSpinner = true;
+                    _queueNameSelectBox = e.Value.ToString();
+
+                    var selectedQueue = _queues.FirstOrDefault(x => x.Name == (_queueNameSelectBox));
+                    _activeMsgsText = selectedQueue.QueueStats.ActiveMessageCount.ToString();
+                    _deadLetterTxt = selectedQueue.QueueStats.DeadLetterMessageCount.ToString();
+
+                    if (_instanceIdSelectBox.IsNotNullOrWhitespace())
+                    {
+                        var properties = SetQueueProperties(selectedQueue);
+                        await _propertiesNotifierService.SetQueueProperties(properties);
+                        _propertiesSpinner = false;
+                        _traceLogsNotifier.AddToQueue($"Queues Received for Instance: {_instanceIdSelectBox} , Queue: {_queueNameSelectBox} ").SafeFireAndForget();
+                    }
+                }
+            }
+            catch (SbDriverUiException sbe)
+            {
+                _toastService.ShowError(sbe.Message);
+            }
+        }
+
         private Dictionary<string, string> SetTopicProperties(TopicResponseDto selectedTopic)
         {
             var properties = new Dictionary<string, string>();
@@ -166,6 +220,25 @@ namespace ServiceBusDriver.Client.UIComponents.Components
             properties.Add(nameof(selectedTopic.TopicTimeDetails.DuplicateDetectionHistoryTimeWindow).ToSpaceSeperated(),
                            selectedTopic.TopicTimeDetails.DuplicateDetectionHistoryTimeWindow.ToString());
             properties.Add(nameof(selectedTopic.TopicTimeDetails.DefaultMessageTimeToLive).ToSpaceSeperated(), selectedTopic.TopicTimeDetails.DefaultMessageTimeToLive.ToString());
+            return properties;
+        }
+
+        private Dictionary<string, string> SetQueueProperties(QueueResponseDto selectedQueue)
+        {
+            var properties = new Dictionary<string, string>();
+            properties.Add(nameof(selectedQueue.QueueStats.SizeInBytes).ToSpaceSeperated(), selectedQueue.QueueStats.SizeInBytes.ToString());
+            properties.Add(nameof(selectedQueue.QueueStats.ScheduledMessageCount).ToSpaceSeperated(), selectedQueue.QueueStats.ScheduledMessageCount.ToString());
+            properties.Add(nameof(selectedQueue.QueueCheckBoxProperties.EnableBatchedOperations).ToSpaceSeperated(), selectedQueue.QueueCheckBoxProperties.EnableBatchedOperations.ToString());
+            properties.Add(nameof(selectedQueue.QueueCheckBoxProperties.EnablePartitioning).ToSpaceSeperated(), selectedQueue.QueueCheckBoxProperties.EnablePartitioning.ToString());
+            properties.Add(nameof(selectedQueue.QueueCheckBoxProperties.RequiresDuplicateDetection).ToSpaceSeperated(), selectedQueue.QueueCheckBoxProperties.RequiresDuplicateDetection.ToString());
+            properties.Add(nameof(selectedQueue.QueueCheckBoxProperties.SupportOrdering).ToSpaceSeperated(), selectedQueue.QueueCheckBoxProperties.SupportOrdering.ToString());
+            properties.Add(nameof(selectedQueue.QueueDateProperties.AccessedAt).ToSpaceSeperated(), selectedQueue.QueueDateProperties.AccessedAt.ToString());
+            properties.Add(nameof(selectedQueue.QueueDateProperties.CreatedAt).ToSpaceSeperated(), selectedQueue.QueueDateProperties.CreatedAt.ToString());
+            properties.Add(nameof(selectedQueue.QueueDateProperties.UpdatedAt).ToSpaceSeperated(), selectedQueue.QueueDateProperties.UpdatedAt.ToString());
+            properties.Add(nameof(selectedQueue.QueueTimeDetails.AutoDeleteOnIdle).ToSpaceSeperated(), selectedQueue.QueueTimeDetails.AutoDeleteOnIdle.ToString());
+            properties.Add(nameof(selectedQueue.QueueTimeDetails.DuplicateDetectionHistoryTimeWindow).ToSpaceSeperated(),
+                           selectedQueue.QueueTimeDetails.DuplicateDetectionHistoryTimeWindow.ToString());
+            properties.Add(nameof(selectedQueue.QueueTimeDetails.DefaultMessageTimeToLive).ToSpaceSeperated(), selectedQueue.QueueTimeDetails.DefaultMessageTimeToLive.ToString());
             return properties;
         }
 
@@ -244,9 +317,11 @@ namespace ServiceBusDriver.Client.UIComponents.Components
                 if (ValidatePropertiesAreNotNull() && ValidatePeekParams(_activeMsgsText, _activeMsgCountInput))
                 {
                     _peekActiveMessageSpinner = true;
-                    _messages = await _messageHandler.GetActiveMessages(_instanceIdSelectBox, _topicNameSelectBox, _subscriptionNameSelectBox, _activeMsgCountInput);
+                    _messages = await _messageHandler.GetActiveMessages(_instanceIdSelectBox, _queueNameSelectBox, _topicNameSelectBox, _subscriptionNameSelectBox, _activeMsgCountInput);
 
-                    await _messageNotifierService.SetCurrentPropertiesAndMessages(_instanceIdSelectBox, _topicNameSelectBox, _subscriptionNameSelectBox, "Active", _messages);
+                    var typeBreadCrumb = _featureIsQueue ? _queueNameSelectBox : _topicNameSelectBox;
+                    var subsBreadCrumb = _featureIsQueue ? null : _subscriptionNameSelectBox;
+                    await _messageNotifierService.SetCurrentPropertiesAndMessages(_instanceIdSelectBox, typeBreadCrumb, subsBreadCrumb, "Active", _messages);
 
                     _peekActiveMessageSpinner = false;
                     StateHasChanged();
@@ -268,9 +343,11 @@ namespace ServiceBusDriver.Client.UIComponents.Components
                 if (ValidatePropertiesAreNotNull() && ValidatePeekParams(_deadLetterTxt, _deadLetterMsgCountInput))
                 {
                     _peekDlqMessageSpinner = true;
-                    _messages = await _messageHandler.GetDeadLetterMessages(_instanceIdSelectBox, _topicNameSelectBox, _subscriptionNameSelectBox, _deadLetterMsgCountInput);
+                    _messages = await _messageHandler.GetDeadLetterMessages(_instanceIdSelectBox, _queueNameSelectBox, _topicNameSelectBox, _subscriptionNameSelectBox, _deadLetterMsgCountInput);
 
-                    await _messageNotifierService.SetCurrentPropertiesAndMessages(_instanceIdSelectBox, _topicNameSelectBox, _subscriptionNameSelectBox, "Dead Letter", _messages);
+                    var typeBreadCrumb = _featureIsQueue ? _queueNameSelectBox : _topicNameSelectBox;
+                    var subsBreadCrumb = _featureIsQueue ? null : _subscriptionNameSelectBox;
+                    await _messageNotifierService.SetCurrentPropertiesAndMessages(_instanceIdSelectBox, typeBreadCrumb, subsBreadCrumb, "Active", _messages);
 
                     _peekDlqMessageSpinner = false;
                     StateHasChanged();
@@ -292,8 +369,11 @@ namespace ServiceBusDriver.Client.UIComponents.Components
                 if (ValidatePropertiesAreNotNull() && ValidatePeekParams(_activeMsgsText, _lastNMsgCountInput))
                 {
                     _peekLastNMessageSpinner = true;
-                    _messages = await _messageHandler.GetLastNMessages(_instanceIdSelectBox, _topicNameSelectBox, _subscriptionNameSelectBox, false, _lastNMsgCountInput);
-                    await _messageNotifierService.SetCurrentPropertiesAndMessages(_instanceIdSelectBox, _topicNameSelectBox, _subscriptionNameSelectBox, "Active", _messages);
+                    _messages = await _messageHandler.GetLastNMessages(_instanceIdSelectBox, _queueNameSelectBox, _topicNameSelectBox, _subscriptionNameSelectBox,  false, _lastNMsgCountInput);
+                    
+                    var typeBreadCrumb = _featureIsQueue ? _queueNameSelectBox : _topicNameSelectBox;
+                    var subsBreadCrumb = _featureIsQueue ? null : _subscriptionNameSelectBox;
+                    await _messageNotifierService.SetCurrentPropertiesAndMessages(_instanceIdSelectBox, typeBreadCrumb, subsBreadCrumb, "Active", _messages);
 
                     _peekLastNMessageSpinner = false;
                     StateHasChanged();
@@ -336,6 +416,8 @@ namespace ServiceBusDriver.Client.UIComponents.Components
             return result;
         }
 
+
+
         private void UpdateSearchQueue(bool deadLetterQueue)
         {
             _searchDlQueueRadio = deadLetterQueue;
@@ -374,7 +456,7 @@ namespace ServiceBusDriver.Client.UIComponents.Components
 
 
                             _searchMessageSpinner = true;
-                            _messages = await _messageHandler.SearchMessages(_instanceIdSelectBox, _topicNameSelectBox, _subscriptionNameSelectBox, _searchPathInput, _searchKeyInput,
+                            _messages = await _messageHandler.SearchMessages(_instanceIdSelectBox, _queueNameSelectBox, _topicNameSelectBox, _subscriptionNameSelectBox, _searchPathInput, _searchKeyInput,
                                                                              _searchDlQueueRadio);
 
                             await _messageNotifierService.SetCurrentPropertiesAndMessages(_instanceIdSelectBox, _topicNameSelectBox, _subscriptionNameSelectBox,
@@ -402,12 +484,22 @@ namespace ServiceBusDriver.Client.UIComponents.Components
 
         private bool ValidatePropertiesAreNotNull()
         {
-            if (_instanceIdSelectBox.IsNotNullOrWhitespace() && _topicNameSelectBox.IsNotNullOrWhitespace() && _subscriptionNameSelectBox.IsNotNullOrWhitespace())
+            if (_featureIsQueue)
             {
-                return true;
+                if (_instanceIdSelectBox.IsNotNullOrWhitespace() && _queueNameSelectBox.IsNotNullOrWhitespace())
+                {
+                    return true;
+                }
+
+                _toastService.ShowError(ApiConstants.UiErrorConstants.InstanceAndQueueNotFound);
             }
             else
             {
+                if (_instanceIdSelectBox.IsNotNullOrWhitespace() && _topicNameSelectBox.IsNotNullOrWhitespace() && _subscriptionNameSelectBox.IsNotNullOrWhitespace())
+                {
+                    return true;
+                }
+
                 _toastService.ShowError(ApiConstants.UiErrorConstants.InstanceAndTopicNotFound);
             }
 

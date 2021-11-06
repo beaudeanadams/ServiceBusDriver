@@ -12,6 +12,7 @@ namespace ServiceBusDriver.Server.Settings
         }
 
         public string AesKey => GetValue("AesKey");
+        public string Environment => GetValue("environment");
 
         public string GetValue(string key)
         {

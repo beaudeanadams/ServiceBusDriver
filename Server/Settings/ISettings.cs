@@ -3,5 +3,6 @@
     public interface ISettings
     {
         string AesKey { get; }
+        string Environment { get; }
     }
 }

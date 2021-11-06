@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Blazored.LocalStorage;
@@ -13,6 +14,7 @@ using ServiceBusDriver.Client.CustomHandlers;
 using ServiceBusDriver.Client.Features.Auth;
 using ServiceBusDriver.Client.Features.Instance;
 using ServiceBusDriver.Client.Features.Message;
+using ServiceBusDriver.Client.Features.Queue;
 using ServiceBusDriver.Client.Features.Subscription;
 using ServiceBusDriver.Client.Features.Topic;
 using ServiceBusDriver.Client.Services;
@@ -48,9 +50,6 @@ namespace ServiceBusDriver.Client
             builder.Services.AddBlazoredLocalStorage();
             builder.Services.AddBlazoredToast();
 
-            // UI Components
-            builder.Services.AddMatBlazor();
-
             AddHttpClients(builder);
 
             await builder.Build().RunAsync();
@@ -79,6 +78,12 @@ namespace ServiceBusDriver.Client
                 .AddHttpMessageHandler<CustomAuthorizationHandler>()
                 .AddHttpMessageHandler<UnauthorizedResponseHandler>()
                 .AddHttpMessageHandler<HttpMetricsHandler>();
+
+            builder.Services.AddHttpClient<IQueueHandler, QueueHandler>
+                       ("QueueClient", client => client.BaseAddress = baseAddress)
+                   .AddHttpMessageHandler<CustomAuthorizationHandler>()
+                   .AddHttpMessageHandler<UnauthorizedResponseHandler>()
+                   .AddHttpMessageHandler<HttpMetricsHandler>();
 
             builder.Services.AddHttpClient<ISubscriptionHandler, SubscriptionHandler>
                     ("SubscriptionClient", client => client.BaseAddress = baseAddress)

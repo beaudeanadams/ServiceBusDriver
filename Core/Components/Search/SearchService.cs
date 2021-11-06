@@ -34,6 +34,7 @@ namespace ServiceBusDriver.Core.Components.Search
             var messages = await _messageService.FetchMessages(new FetchMessagesCommand
             {
                 InstanceId = command.InstanceId,
+                QueueName = command.QueueName,
                 TopicName = command.TopicName,
                 SubscriptionName = command.SubscriptionName,
                 FetchAll = command.MaxMessages == 0 ? true : false,

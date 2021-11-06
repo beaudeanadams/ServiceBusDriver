@@ -2,6 +2,7 @@
 using ServiceBusDriver.Core.Components.Connection;
 using ServiceBusDriver.Core.Components.Instance;
 using ServiceBusDriver.Core.Components.Message;
+using ServiceBusDriver.Core.Components.Queue;
 using ServiceBusDriver.Core.Components.SbClients;
 using ServiceBusDriver.Core.Components.Search;
 using ServiceBusDriver.Core.Components.Subscription;
@@ -16,6 +17,7 @@ namespace ServiceBusDriver.Core
             services.AddScoped<IConnectionService, ConnectionService>();
             services.AddScoped<IInstanceService, InstanceService>();
             services.AddScoped<ITopicService, TopicService>();
+            services.AddScoped<IQueueService, QueueService>();
             services.AddScoped<ISubscriptionService, SubscriptionService>();
             services.AddScoped<IMessageService, MessageService>();
             services.AddScoped<ISearchService, SearchService>();

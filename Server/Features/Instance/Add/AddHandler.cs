@@ -12,6 +12,7 @@ using ServiceBusDriver.Db.Entities;
 using ServiceBusDriver.Db.Repository;
 using ServiceBusDriver.Server.Services.AuthContext;
 using ServiceBusDriver.Server.Services.Password;
+using ServiceBusDriver.Server.Settings;
 using ServiceBusDriver.Shared.Constants;
 using ServiceBusDriver.Shared.Features.Error;
 using ServiceBusDriver.Shared.Features.Instance;
@@ -25,13 +26,14 @@ namespace ServiceBusDriver.Server.Features.Instance.Add
         private readonly IAesEncryptService _aesEncryptService;
         private readonly IInstanceRepository _instanceRepository;
         private readonly IMapper _mapper;
+        private readonly ISettings _settings;
         private readonly ILogger<AddHandler> _logger;
 
         public AddHandler(ILogger<AddHandler> logger,
             IMapper mapper, ICurrentUser currentUser,
             IConnectionService connectionService,
             IAesEncryptService aesEncryptService,
-            IInstanceRepository instanceRepository)
+            IInstanceRepository instanceRepository, ISettings settings)
         {
             _logger = logger;
             _mapper = mapper;
@@ -39,13 +41,14 @@ namespace ServiceBusDriver.Server.Features.Instance.Add
             _connectionService = connectionService;
             _aesEncryptService = aesEncryptService;
             _instanceRepository = instanceRepository;
+            _settings = settings;
         }
 
         public async Task<InstanceResponseDto> Handle(AddRequestDto requestDto, CancellationToken cancellationToken)
         {
             _logger.LogTrace("Start {0}", nameof(Handle));
-
-            if (_currentUser.User.Email.EndsWith("test.com"))
+            
+            if (_currentUser.User.Email.EndsWith("test.com") && _settings.Environment!=ServerConstants.Environments.LOCAL)
             {
                 throw new AppException()
                 {

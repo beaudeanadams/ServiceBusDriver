@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using AsyncAwaitBestPractices;
 using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using ServiceBusDriver.Db.Entities;
 using ServiceBusDriver.Db.Repository;
@@ -10,6 +11,8 @@ using ServiceBusDriver.Server.Services;
 using ServiceBusDriver.Server.Services.Email;
 using ServiceBusDriver.Server.Services.FirebaseAuth;
 using ServiceBusDriver.Server.Services.Validations;
+using ServiceBusDriver.Shared.Constants;
+using ServiceBusDriver.Shared.Features.Error;
 using ServiceBusDriver.Shared.Features.User;
 
 namespace ServiceBusDriver.Server.Features.User.Add
@@ -66,7 +69,15 @@ namespace ServiceBusDriver.Server.Features.User.Add
             }
             else
             {
-                return null;
+                throw new AppException()
+                {
+                    HttpStatusCode = StatusCodes.Status400BadRequest,
+                    ErrorMessage = new AppErrorMessageDto
+                    {
+                        Code = AppErrorConstants.BadRequestErrorCode,
+                        UserMessageText = "Email already in system"
+                    }
+                };
             }
         }
 

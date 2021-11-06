@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.WebUtilities;
+using ServiceBusDriver.Client.Constants;
+using ServiceBusDriver.Shared.Features.Topic;
+using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.WebUtilities;
-using ServiceBusDriver.Client.Constants;
-using ServiceBusDriver.Shared.Features.Topic;
 
 namespace ServiceBusDriver.Client.Features.Topic
 {

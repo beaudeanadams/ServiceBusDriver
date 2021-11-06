@@ -10,16 +10,16 @@ using ServiceBusDriver.Server.Services.Validations;
 using ServiceBusDriver.Shared.Features.Message;
 using ServiceBusDriver.Shared.Features.Subscription;
 
-namespace ServiceBusDriver.Server.Features.Subscription.GetActiveMessages
+namespace ServiceBusDriver.Server.Features.Message.GetDeadLetteredMessages
 {
-    public class GetActiveMessagesHandler : IRequestHandler<GetActiveMessagesRequest, List<MessageResponseDto>>
+    public class GetDeadLetteredMessagesHandler : IRequestHandler<GetDeadLetteredMessagesRequest, List<MessageResponseDto>>
     {
         private readonly IMessageService _messageService;
         private readonly IMapper _mapper;
         private readonly IDbFetchHelper _dbFetchHelper;
-        private readonly ILogger<GetActiveMessagesHandler> _logger;
+        private readonly ILogger<GetDeadLetteredMessagesHandler> _logger;
 
-        public GetActiveMessagesHandler(IMessageService messageService, ILogger<GetActiveMessagesHandler> logger, IMapper mapper, IDbFetchHelper dbFetchHelper)
+        public GetDeadLetteredMessagesHandler(IMessageService messageService, ILogger<GetDeadLetteredMessagesHandler> logger, IMapper mapper, IDbFetchHelper dbFetchHelper)
         {
             _messageService = messageService;
             _logger = logger;
@@ -27,7 +27,7 @@ namespace ServiceBusDriver.Server.Features.Subscription.GetActiveMessages
             _dbFetchHelper = dbFetchHelper;
         }
 
-        public async Task<List<MessageResponseDto>> Handle(GetActiveMessagesRequest request, CancellationToken cancellationToken)
+        public async Task<List<MessageResponseDto>> Handle(GetDeadLetteredMessagesRequest request, CancellationToken cancellationToken)
         {
             _logger.LogTrace("Start {0}", nameof(Handle));
 
@@ -36,10 +36,11 @@ namespace ServiceBusDriver.Server.Features.Subscription.GetActiveMessages
             var result = await _messageService.FetchMessages(new FetchMessagesCommand
             {
                 InstanceId = request.InstanceId,
+                QueueName = request.QueueName,
                 TopicName = request.TopicName,
                 SubscriptionName = request.SubscriptionName,
                 FetchAll = false,
-                DeadLetterQueue = false,
+                DeadLetterQueue = true,
                 OrderByDescending = false,
                 PrefetchCount = request.PrefetchCount,
                 MaxMessages = request.MaxMessages

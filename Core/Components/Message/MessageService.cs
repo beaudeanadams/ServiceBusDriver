@@ -134,12 +134,27 @@ namespace ServiceBusDriver.Core.Components.Message
         private ServiceBusReceiver GetServiceBusReceiver(ServiceBusClient sbClient, FetchMessagesCommand command, int activeMessageCount, SubQueue subQueue)
         {
             _logger.LogTrace("Start {0}", nameof(GetServiceBusReceiver));
-            var receiver = sbClient.CreateReceiver(command.TopicName, command.SubscriptionName, new ServiceBusReceiverOptions
+
+            ServiceBusReceiver receiver;
+            if (command.QueueName == null)
             {
-                ReceiveMode = ServiceBusReceiveMode.PeekLock,
-                PrefetchCount = activeMessageCount > MessageConstants.FetchMessagePrefetchCount ? MessageConstants.FetchMessagePrefetchCount : activeMessageCount,
-                SubQueue = subQueue
-            });
+                receiver = sbClient.CreateReceiver(command.TopicName, command.SubscriptionName, new ServiceBusReceiverOptions
+                {
+                    ReceiveMode = ServiceBusReceiveMode.PeekLock,
+                    PrefetchCount = activeMessageCount > MessageConstants.FetchMessagePrefetchCount ? MessageConstants.FetchMessagePrefetchCount : activeMessageCount,
+                    SubQueue = subQueue
+                });
+            }
+            else
+            {
+                receiver = sbClient.CreateReceiver(command.QueueName, new ServiceBusReceiverOptions
+                {
+                    ReceiveMode = ServiceBusReceiveMode.PeekLock,
+                    PrefetchCount = activeMessageCount > MessageConstants.FetchMessagePrefetchCount ? MessageConstants.FetchMessagePrefetchCount : activeMessageCount,
+                    SubQueue = subQueue
+                });
+            }
+
             _logger.LogTrace("Finish {0}", nameof(GetServiceBusReceiver));
             return receiver;
         }
@@ -150,11 +165,22 @@ namespace ServiceBusDriver.Core.Components.Message
 
             try
             {
-                var subscriptionRuntimeProperty = await adminClient.GetSubscriptionRuntimePropertiesAsync(command.TopicName,
-                    command.SubscriptionName, cancellationToken);
-
-                var messagesCount = command.DeadLetterQueue ? Convert.ToInt32(subscriptionRuntimeProperty.Value.DeadLetterMessageCount)
+                int messagesCount;
+                if (command.QueueName != null)
+                {
+                    var queueDetails = await adminClient.GetQueueRuntimePropertiesAsync(command.QueueName, cancellationToken);
+                    messagesCount = command.DeadLetterQueue
+                        ? Convert.ToInt32(queueDetails.Value.DeadLetterMessageCount)
+                        : Convert.ToInt32(queueDetails.Value.ActiveMessageCount);
+                }
+                else
+                {
+                    var subscriptionRuntimeProperty = await adminClient.GetSubscriptionRuntimePropertiesAsync(command.TopicName,
+                                                                                                              command.SubscriptionName, cancellationToken);
+                    messagesCount = command.DeadLetterQueue
+                        ? Convert.ToInt32(subscriptionRuntimeProperty.Value.DeadLetterMessageCount)
                         : Convert.ToInt32(subscriptionRuntimeProperty.Value.ActiveMessageCount);
+                }
 
                 _logger.LogTrace("Finish {0}", nameof(GetMessagesInQueueCount));
 

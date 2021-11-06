@@ -3,6 +3,7 @@
     public class FetchMessagesCommand
     {
         public string InstanceId { get; set; }
+        public string QueueName { get; set; }
         public string TopicName { get; set; }
         public string SubscriptionName { get; set; }
         public bool FetchAll { get; set; }
