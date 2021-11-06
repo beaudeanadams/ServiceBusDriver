@@ -34,6 +34,26 @@ select, input, button {
     justify-content: center !important;
 }
 
+.peek-get-l {
+    font-size: 10px !important;
+    padding: 3px !important;
+    float: right !important;
+    cursor: pointer !important;
+    position: absolute !important;
+    margin-top: 6px !important;
+    margin-left: -70px !important;
+    width: 60px !important;
+    justify-content: center !important;
+}
+
+.recieve-and-peek-button {
+    font-size: 10px !important;
+    padding: 3px !important;
+    cursor: pointer !important;
+    margin-top: 6px !important;
+    justify-content: center !important;
+}
+
 .peek-get-r {
     font-size: 10px !important;
     padding: 3px !important;

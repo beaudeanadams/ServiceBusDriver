@@ -42,7 +42,8 @@ namespace ServiceBusDriver.Server.Features.Message.GetActiveMessages
                 DeadLetterQueue = false,
                 OrderByDescending = false,
                 PrefetchCount = request.PrefetchCount,
-                MaxMessages = request.MaxMessages
+                MaxMessages = request.MaxMessages,
+                ReceiveAndDelete = request.ReceiveAndDelete
             }, cancellationToken);
 
             var response = _mapper.Map<List<MessageResponseDto>>(result);

@@ -48,6 +48,7 @@
             public const string SubscriptionName = "subscriptionName";
             public const string MaxMessages = "maxMessages";
             public const string DeadLetterQueue = "deadLetterQueue";
+            public const string ReceiveAndDelete = "receiveAndDelete";
         }
 
         public static class MessagesConstants

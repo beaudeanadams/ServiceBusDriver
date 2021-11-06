@@ -11,5 +11,6 @@
         public bool OrderByDescending { get; set; }
         public int PrefetchCount { get; set; }
         public int MaxMessages { get; set; }
+        public bool ReceiveAndDelete { get; set; } // Default false and will result in PeekLock
     }
 }

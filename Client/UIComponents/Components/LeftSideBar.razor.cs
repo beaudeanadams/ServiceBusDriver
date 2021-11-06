@@ -36,6 +36,8 @@ namespace ServiceBusDriver.Client.UIComponents.Components
         //Spinners
         private bool _propertiesSpinner;
         private bool _peekActiveMessageSpinner;
+        private bool _receiveAndDeleteActiveMessageSpinner;
+        private bool _receiveAndDeleteDlMessageSpinner;
         private bool _peekDlqMessageSpinner;
         private bool _peekLastNMessageSpinner;
         private bool _searchMessageSpinner;
@@ -330,6 +332,37 @@ namespace ServiceBusDriver.Client.UIComponents.Components
                     await _messageNotifierService.SetCurrentPropertiesAndMessages(_instanceIdSelectBox, typeBreadCrumb, subsBreadCrumb, "Active", _messages);
 
                     _peekActiveMessageSpinner = false;
+                 
+                    StateHasChanged();
+
+                    _traceLogsNotifier.AddToQueue("Message Details Received for Instance:" + _instanceIdSelectBox + ", Topic:" + _topicNameSelectBox + ", Subscription:" + _subscriptionNameSelectBox)
+                                      .SafeFireAndForget();
+                }
+            }
+            catch (SbDriverUiException sbe)
+            {
+                _toastService.ShowError(sbe.Message);
+            }
+        }
+
+        private async void ReceiveActiveMessages()
+        {
+            try
+            {
+                if (ValidatePropertiesAreNotNull() && ValidatePeekParams(_activeMsgsText, _activeMsgCountInput))
+                {
+                    _receiveAndDeleteActiveMessageSpinner = true;
+                    _messages = await _messageHandler.GetActiveMessages(_instanceIdSelectBox, _queueNameSelectBox, _topicNameSelectBox, _subscriptionNameSelectBox, _activeMsgCountInput, true);
+
+                    var typeBreadCrumb = _featureIsQueue ? _queueNameSelectBox : _topicNameSelectBox;
+                    var subsBreadCrumb = _featureIsQueue ? null : _subscriptionNameSelectBox;
+                    await _messageNotifierService.SetCurrentPropertiesAndMessages(_instanceIdSelectBox, typeBreadCrumb, subsBreadCrumb, "Active", _messages);
+
+                    _receiveAndDeleteActiveMessageSpinner = false;
+                    OnSubscriptionValueChanged(new ChangeEventArgs()
+                    {
+                        Value = _subscriptionNameSelectBox
+                    });
                     StateHasChanged();
 
                     _traceLogsNotifier.AddToQueue("Message Details Received for Instance:" + _instanceIdSelectBox + ", Topic:" + _topicNameSelectBox + ", Subscription:" + _subscriptionNameSelectBox)
@@ -356,6 +389,36 @@ namespace ServiceBusDriver.Client.UIComponents.Components
                     await _messageNotifierService.SetCurrentPropertiesAndMessages(_instanceIdSelectBox, typeBreadCrumb, subsBreadCrumb, "Active", _messages);
 
                     _peekDlqMessageSpinner = false;
+                    StateHasChanged();
+
+                    _traceLogsNotifier.AddToQueue("Message Details Received for Instance:" + _instanceIdSelectBox + ", Topic:" + _topicNameSelectBox + ", Subscription:" +
+                                                  _subscriptionNameSelectBox).SafeFireAndForget();
+                }
+            }
+            catch (SbDriverUiException sbe)
+            {
+                _toastService.ShowError(sbe.Message);
+            }
+        }
+
+        private async void ReceiveDeadLetter()
+        {
+            try
+            {
+                if (ValidatePropertiesAreNotNull() && ValidatePeekParams(_deadLetterTxt, _deadLetterMsgCountInput))
+                {
+                    _receiveAndDeleteActiveMessageSpinner = true;
+                    _messages = await _messageHandler.GetDeadLetterMessages(_instanceIdSelectBox, _queueNameSelectBox, _topicNameSelectBox, _subscriptionNameSelectBox, _deadLetterMsgCountInput, true);
+
+                    var typeBreadCrumb = _featureIsQueue ? _queueNameSelectBox : _topicNameSelectBox;
+                    var subsBreadCrumb = _featureIsQueue ? null : _subscriptionNameSelectBox;
+                    await _messageNotifierService.SetCurrentPropertiesAndMessages(_instanceIdSelectBox, typeBreadCrumb, subsBreadCrumb, "Active", _messages);
+
+                    _receiveAndDeleteActiveMessageSpinner = false;
+                    OnSubscriptionValueChanged(new ChangeEventArgs()
+                    {
+                        Value = _subscriptionNameSelectBox
+                    });
                     StateHasChanged();
 
                     _traceLogsNotifier.AddToQueue("Message Details Received for Instance:" + _instanceIdSelectBox + ", Topic:" + _topicNameSelectBox + ", Subscription:" +
