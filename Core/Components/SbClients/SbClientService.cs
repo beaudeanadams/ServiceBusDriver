@@ -6,7 +6,7 @@ namespace ServiceBusDriver.Core.Components.SbClients
     {
         private ServiceBusClient _serviceBusClient;
 
-        private readonly ServiceBusClientOptions _clientOptions = new ServiceBusClientOptions
+        private readonly ServiceBusClientOptions _clientOptions = new()
         {
             RetryOptions = new ServiceBusRetryOptions
             {

@@ -14,14 +14,13 @@ using ServiceBusDriver.Shared.Features.Error;
 
 namespace ServiceBusDriver.Server.Services
 {
-    public class MyInstanceService : InstanceService
+    public class CustomDbInstanceService : InstanceService
     {
-        private readonly ILogger<MyInstanceService> _logger;
+        private readonly ILogger<CustomDbInstanceService> _logger;
         private readonly IInstanceRepository _instanceRepository;
         private readonly IAesEncryptService _aesEncryptService;
 
-
-        public MyInstanceService(ILogger<MyInstanceService> logger, IInstanceRepository instanceRepository, IAesEncryptService aesEncryptService) : base(logger)
+        public CustomDbInstanceService(ILogger<CustomDbInstanceService> logger, IInstanceRepository instanceRepository, IAesEncryptService aesEncryptService) : base(logger)
         {
             _logger = logger;
             _instanceRepository = instanceRepository;
@@ -73,6 +72,7 @@ namespace ServiceBusDriver.Server.Services
         /// Get Instance from Id
         /// </summary>
         /// <param name="id">Instance Id.</param>
+        /// <param name="cancellationToken"></param>
         public override async Task<InstanceResponse> GetInstance(string id, CancellationToken cancellationToken = default)
         {
             _logger.LogTrace("Start {0}", nameof(GetInstance));

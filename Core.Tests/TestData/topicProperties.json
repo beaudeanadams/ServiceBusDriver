@@ -1,0 +1,266 @@
+[
+  {
+    "DefaultMessageTimeToLive": "14.00:00:00",
+    "AutoDeleteOnIdle": "10675199.02:48:05.4775807",
+    "MaxSizeInMegabytes": 1024,
+    "RequiresDuplicateDetection": false,
+    "DuplicateDetectionHistoryTimeWindow": "00:10:00",
+    "Name": "topic1.topic",
+    "AuthorizationRules": [
+      {
+        "ClaimType": "SharedAccessKey",
+        "KeyName": "ManageKey",
+        "PrimaryKey": "xxxxxx=",
+        "SecondaryKey": "dl1D+xxxxxx/sMzb4=",
+        "Rights": [ 0, 1, 2 ],
+        "CreatedTime": "2020-09-22T08:54:49.8979497+00:00",
+        "ModifiedTime": "2020-09-22T08:54:49.8979497+00:00"
+      }
+    ],
+    "Status": {},
+    "EnablePartitioning": false,
+    "SupportOrdering": true,
+    "EnableBatchedOperations": true,
+    "UserMetadata": null
+  },
+  {
+    "DefaultMessageTimeToLive": "14.00:00:00",
+    "AutoDeleteOnIdle": "10675199.02:48:05.4775807",
+    "MaxSizeInMegabytes": 1024,
+    "RequiresDuplicateDetection": false,
+    "DuplicateDetectionHistoryTimeWindow": "00:10:00",
+    "Name": "topic2.topic",
+    "AuthorizationRules": [
+      {
+        "ClaimType": "SharedAccessKey",
+        "KeyName": "ManageKey",
+        "PrimaryKey": "xxxxxx/xxxxxx=",
+        "SecondaryKey": "YpVNc/xxxxxx=",
+        "Rights": [ 0, 1, 2 ],
+        "CreatedTime": "2020-10-23T01:42:58.8277137+00:00",
+        "ModifiedTime": "2020-10-23T01:42:58.8277137+00:00"
+      }
+    ],
+    "Status": {},
+    "EnablePartitioning": false,
+    "SupportOrdering": true,
+    "EnableBatchedOperations": true,
+    "UserMetadata": null
+  },
+  {
+    "DefaultMessageTimeToLive": "14.00:00:00",
+    "AutoDeleteOnIdle": "10675199.02:48:05.4775807",
+    "MaxSizeInMegabytes": 1024,
+    "RequiresDuplicateDetection": false,
+    "DuplicateDetectionHistoryTimeWindow": "00:10:00",
+    "Name": "topic3.topic",
+    "AuthorizationRules": [
+      {
+        "ClaimType": "SharedAccessKey",
+        "KeyName": "ManageKey",
+        "PrimaryKey": "xxxxxx/ODg=",
+        "SecondaryKey": "xxxxxx+K9WXoeb4+xxxxxx=",
+        "Rights": [ 0, 1, 2 ],
+        "CreatedTime": "2021-01-21T05:09:48.3582371+00:00",
+        "ModifiedTime": "2021-01-21T05:09:48.3582371+00:00"
+      }
+    ],
+    "Status": {},
+    "EnablePartitioning": false,
+    "SupportOrdering": true,
+    "EnableBatchedOperations": true,
+    "UserMetadata": null
+  },
+  {
+    "DefaultMessageTimeToLive": "14.00:00:00",
+    "AutoDeleteOnIdle": "10675199.02:48:05.4775807",
+    "MaxSizeInMegabytes": 1024,
+    "RequiresDuplicateDetection": false,
+    "DuplicateDetectionHistoryTimeWindow": "00:10:00",
+    "Name": "topic4.topic",
+    "AuthorizationRules": [
+      {
+        "ClaimType": "SharedAccessKey",
+        "KeyName": "ManageKey",
+        "PrimaryKey": "xxxxxx/o=",
+        "SecondaryKey": "xxxxxx+0kRoZub4TeC+xxxxxx=",
+        "Rights": [ 0, 1, 2 ],
+        "CreatedTime": "2020-09-22T09:34:58.9116271+00:00",
+        "ModifiedTime": "2020-09-22T09:34:58.9116271+00:00"
+      }
+    ],
+    "Status": {},
+    "EnablePartitioning": false,
+    "SupportOrdering": true,
+    "EnableBatchedOperations": true,
+    "UserMetadata": null
+  },
+  {
+    "DefaultMessageTimeToLive": "14.00:00:00",
+    "AutoDeleteOnIdle": "10675199.02:48:05.4775807",
+    "MaxSizeInMegabytes": 1024,
+    "RequiresDuplicateDetection": false,
+    "DuplicateDetectionHistoryTimeWindow": "00:10:00",
+    "Name": "topic5.topic",
+    "AuthorizationRules": [
+      {
+        "ClaimType": "SharedAccessKey",
+        "KeyName": "ManageKey",
+        "PrimaryKey": "inw/xxxxxx+7E5JnJxxxxxxeL9hImV7yFFw=",
+        "SecondaryKey": "xxxxxx+xxxxxx=",
+        "Rights": [ 0, 1, 2 ],
+        "CreatedTime": "2020-09-22T09:19:40.4280597+00:00",
+        "ModifiedTime": "2020-09-22T09:19:40.4280597+00:00"
+      }
+    ],
+    "Status": {},
+    "EnablePartitioning": false,
+    "SupportOrdering": true,
+    "EnableBatchedOperations": true,
+    "UserMetadata": null
+  },
+  {
+    "DefaultMessageTimeToLive": "14.00:00:00",
+    "AutoDeleteOnIdle": "10675199.02:48:05.4775807",
+    "MaxSizeInMegabytes": 1024,
+    "RequiresDuplicateDetection": false,
+    "DuplicateDetectionHistoryTimeWindow": "00:10:00",
+    "Name": "topic6.topic",
+    "AuthorizationRules": [
+      {
+        "ClaimType": "SharedAccessKey",
+        "KeyName": "ManageKey",
+        "PrimaryKey": "xxxxxx=",
+        "SecondaryKey": "xxxxxx+xxxxxx=",
+        "Rights": [ 0, 1, 2 ],
+        "CreatedTime": "2020-10-22T00:29:58.0897685+00:00",
+        "ModifiedTime": "2020-10-22T00:29:58.0897685+00:00"
+      }
+    ],
+    "Status": {},
+    "EnablePartitioning": false,
+    "SupportOrdering": true,
+    "EnableBatchedOperations": true,
+    "UserMetadata": null
+  },
+  {
+    "DefaultMessageTimeToLive": "14.00:00:00",
+    "AutoDeleteOnIdle": "10675199.02:48:05.4775807",
+    "MaxSizeInMegabytes": 1024,
+    "RequiresDuplicateDetection": false,
+    "DuplicateDetectionHistoryTimeWindow": "00:10:00",
+    "Name": "topic7.topic",
+    "AuthorizationRules": [
+      {
+        "ClaimType": "SharedAccessKey",
+        "KeyName": "ManageKey",
+        "PrimaryKey": "xxxxxx/xxxxxx=",
+        "SecondaryKey": "xxxxxx=",
+        "Rights": [ 0, 1, 2 ],
+        "CreatedTime": "2020-09-27T22:19:01.5737954+00:00",
+        "ModifiedTime": "2020-09-27T22:19:01.5737954+00:00"
+      }
+    ],
+    "Status": {},
+    "EnablePartitioning": false,
+    "SupportOrdering": true,
+    "EnableBatchedOperations": true,
+    "UserMetadata": null
+  },
+  {
+    "DefaultMessageTimeToLive": "14.00:00:00",
+    "AutoDeleteOnIdle": "10675199.02:48:05.4775807",
+    "MaxSizeInMegabytes": 1024,
+    "RequiresDuplicateDetection": false,
+    "DuplicateDetectionHistoryTimeWindow": "00:10:00",
+    "Name": "topic8.topic",
+    "AuthorizationRules": [
+      {
+        "ClaimType": "SharedAccessKey",
+        "KeyName": "ManageKey",
+        "PrimaryKey": "xxxxxx=",
+        "SecondaryKey": "xxxxxx/xxxxxx=",
+        "Rights": [ 0, 1, 2 ],
+        "CreatedTime": "2020-09-22T23:38:26.0558032+00:00",
+        "ModifiedTime": "2020-09-22T23:38:26.0558032+00:00"
+      }
+    ],
+    "Status": {},
+    "EnablePartitioning": false,
+    "SupportOrdering": true,
+    "EnableBatchedOperations": true,
+    "UserMetadata": null
+  },
+  {
+    "DefaultMessageTimeToLive": "365.00:00:00",
+    "AutoDeleteOnIdle": "365.00:00:00",
+    "MaxSizeInMegabytes": 1024,
+    "RequiresDuplicateDetection": false,
+    "DuplicateDetectionHistoryTimeWindow": "1.00:00:00",
+    "Name": "topic9.topic",
+    "AuthorizationRules": [
+      {
+        "ClaimType": "SharedAccessKey",
+        "KeyName": "ManageKey",
+        "PrimaryKey": "xxxxxx/xxxxxx=",
+        "SecondaryKey": "xxxxxx=",
+        "Rights": [ 0, 1, 2 ],
+        "CreatedTime": "2020-09-23T04:17:59.6815077+00:00",
+        "ModifiedTime": "2020-09-23T04:17:59.6815077+00:00"
+      }
+    ],
+    "Status": {},
+    "EnablePartitioning": false,
+    "SupportOrdering": true,
+    "EnableBatchedOperations": true,
+    "UserMetadata": null
+  },
+  {
+    "DefaultMessageTimeToLive": "14.00:00:00",
+    "AutoDeleteOnIdle": "10675199.02:48:05.4775807",
+    "MaxSizeInMegabytes": 1024,
+    "RequiresDuplicateDetection": false,
+    "DuplicateDetectionHistoryTimeWindow": "00:10:00",
+    "Name": "topic10.topic",
+    "AuthorizationRules": [
+      {
+        "ClaimType": "SharedAccessKey",
+        "KeyName": "ManageKey",
+        "PrimaryKey": "xxxxxx/xxxxxx=",
+        "SecondaryKey": "xxxxxx=",
+        "Rights": [ 0, 1, 2 ],
+        "CreatedTime": "2020-09-22T09:34:58.8136753+00:00",
+        "ModifiedTime": "2020-09-22T09:34:58.8136753+00:00"
+      }
+    ],
+    "Status": {},
+    "EnablePartitioning": false,
+    "SupportOrdering": true,
+    "EnableBatchedOperations": true,
+    "UserMetadata": null
+  },
+  {
+    "DefaultMessageTimeToLive": "14.00:00:00",
+    "AutoDeleteOnIdle": "10675199.02:48:05.4775807",
+    "MaxSizeInMegabytes": 1024,
+    "RequiresDuplicateDetection": false,
+    "DuplicateDetectionHistoryTimeWindow": "00:10:00",
+    "Name": "topic11.topic",
+    "AuthorizationRules": [
+      {
+        "ClaimType": "SharedAccessKey",
+        "KeyName": "ManageKey",
+        "PrimaryKey": "xxxxxx",
+        "SecondaryKey": "xxxxxx+xxxxxx=",
+        "Rights": [ 0, 1, 2 ],
+        "CreatedTime": "2020-10-13T03:10:49.8558298+00:00",
+        "ModifiedTime": "2020-10-13T03:10:49.8558298+00:00"
+      }
+    ],
+    "Status": {},
+    "EnablePartitioning": false,
+    "SupportOrdering": true,
+    "EnableBatchedOperations": true,
+    "UserMetadata": null
+  }
+]
