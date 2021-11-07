@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AsyncAwaitBestPractices;
+using CurrieTechnologies.Razor.SweetAlert2;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using ServiceBusDriver.Client.Constants;
 using ServiceBusDriver.Client.Services;
+using ServiceBusDriver.Client.UIComponents.Helpers;
 using ServiceBusDriver.Shared.Features.Instance;
 using ServiceBusDriver.Shared.Features.Message;
 using ServiceBusDriver.Shared.Features.Queue;
@@ -143,6 +145,7 @@ namespace ServiceBusDriver.Client.UIComponents.Components
             _featureIsQueue = isQueue;
         }
 
+        // Process topic changed event
         private async void OnTopicsValueChanged(ChangeEventArgs e)
         {
             try
@@ -165,7 +168,7 @@ namespace ServiceBusDriver.Client.UIComponents.Components
                         _propertiesSpinner = false;
                         StateHasChanged();
 
-                        var properties = SetTopicProperties(selectedTopic);
+                        var properties = PropertiesHelper.SetTopicProperties(selectedTopic);
 
                         await _propertiesNotifierService.SetTopicProperties(properties);
                         _traceLogsNotifier.AddToQueue($"Topics Received for Instance: {_instanceIdSelectBox} , Topic: {_topicNameSelectBox} ").SafeFireAndForget();
@@ -178,6 +181,7 @@ namespace ServiceBusDriver.Client.UIComponents.Components
             }
         }
 
+        // Process queue changed event
         private async void OnQueueValueChanged(ChangeEventArgs e)
         {
             try
@@ -198,7 +202,7 @@ namespace ServiceBusDriver.Client.UIComponents.Components
 
                     if (_instanceIdSelectBox.IsNotNullOrWhitespace())
                     {
-                        var properties = SetQueueProperties(selectedQueue);
+                        var properties = PropertiesHelper.SetQueueProperties(selectedQueue);
                         await _propertiesNotifierService.SetQueueProperties(properties);
                         _propertiesSpinner = false;
                         _traceLogsNotifier.AddToQueue($"Queues Received for Instance: {_instanceIdSelectBox} , Queue: {_queueNameSelectBox} ").SafeFireAndForget();
@@ -211,45 +215,8 @@ namespace ServiceBusDriver.Client.UIComponents.Components
             }
         }
 
-        private Dictionary<string, string> SetTopicProperties(TopicResponseDto selectedTopic)
-        {
-            var properties = new Dictionary<string, string>();
-            properties.Add(nameof(selectedTopic.TopicStats.SubscriptionCount).ToSpaceSeperated(), selectedTopic.TopicStats.SubscriptionCount.ToString());
-            properties.Add(nameof(selectedTopic.TopicStats.SizeInBytes).ToSpaceSeperated(), selectedTopic.TopicStats.SizeInBytes.ToString());
-            properties.Add(nameof(selectedTopic.TopicStats.ScheduledMessageCount).ToSpaceSeperated(), selectedTopic.TopicStats.ScheduledMessageCount.ToString());
-            properties.Add(nameof(selectedTopic.TopicCheckBoxProperties.EnableBatchedOperations).ToSpaceSeperated(), selectedTopic.TopicCheckBoxProperties.EnableBatchedOperations.ToString());
-            properties.Add(nameof(selectedTopic.TopicCheckBoxProperties.EnablePartitioning).ToSpaceSeperated(), selectedTopic.TopicCheckBoxProperties.EnablePartitioning.ToString());
-            properties.Add(nameof(selectedTopic.TopicCheckBoxProperties.RequiresDuplicateDetection).ToSpaceSeperated(), selectedTopic.TopicCheckBoxProperties.RequiresDuplicateDetection.ToString());
-            properties.Add(nameof(selectedTopic.TopicCheckBoxProperties.SupportOrdering).ToSpaceSeperated(), selectedTopic.TopicCheckBoxProperties.SupportOrdering.ToString());
-            properties.Add(nameof(selectedTopic.TopicDateProperties.AccessedAt).ToSpaceSeperated(), selectedTopic.TopicDateProperties.AccessedAt.ToString());
-            properties.Add(nameof(selectedTopic.TopicDateProperties.CreatedAt).ToSpaceSeperated(), selectedTopic.TopicDateProperties.CreatedAt.ToString());
-            properties.Add(nameof(selectedTopic.TopicDateProperties.UpdatedAt).ToSpaceSeperated(), selectedTopic.TopicDateProperties.UpdatedAt.ToString());
-            properties.Add(nameof(selectedTopic.TopicTimeDetails.AutoDeleteOnIdle).ToSpaceSeperated(), selectedTopic.TopicTimeDetails.AutoDeleteOnIdle.ToString());
-            properties.Add(nameof(selectedTopic.TopicTimeDetails.DuplicateDetectionHistoryTimeWindow).ToSpaceSeperated(),
-                           selectedTopic.TopicTimeDetails.DuplicateDetectionHistoryTimeWindow.ToString());
-            properties.Add(nameof(selectedTopic.TopicTimeDetails.DefaultMessageTimeToLive).ToSpaceSeperated(), selectedTopic.TopicTimeDetails.DefaultMessageTimeToLive.ToString());
-            return properties;
-        }
 
-        private Dictionary<string, string> SetQueueProperties(QueueResponseDto selectedQueue)
-        {
-            var properties = new Dictionary<string, string>();
-            properties.Add(nameof(selectedQueue.QueueStats.SizeInBytes).ToSpaceSeperated(), selectedQueue.QueueStats.SizeInBytes.ToString());
-            properties.Add(nameof(selectedQueue.QueueStats.ScheduledMessageCount).ToSpaceSeperated(), selectedQueue.QueueStats.ScheduledMessageCount.ToString());
-            properties.Add(nameof(selectedQueue.QueueCheckBoxProperties.EnableBatchedOperations).ToSpaceSeperated(), selectedQueue.QueueCheckBoxProperties.EnableBatchedOperations.ToString());
-            properties.Add(nameof(selectedQueue.QueueCheckBoxProperties.EnablePartitioning).ToSpaceSeperated(), selectedQueue.QueueCheckBoxProperties.EnablePartitioning.ToString());
-            properties.Add(nameof(selectedQueue.QueueCheckBoxProperties.RequiresDuplicateDetection).ToSpaceSeperated(), selectedQueue.QueueCheckBoxProperties.RequiresDuplicateDetection.ToString());
-            properties.Add(nameof(selectedQueue.QueueCheckBoxProperties.SupportOrdering).ToSpaceSeperated(), selectedQueue.QueueCheckBoxProperties.SupportOrdering.ToString());
-            properties.Add(nameof(selectedQueue.QueueDateProperties.AccessedAt).ToSpaceSeperated(), selectedQueue.QueueDateProperties.AccessedAt.ToString());
-            properties.Add(nameof(selectedQueue.QueueDateProperties.CreatedAt).ToSpaceSeperated(), selectedQueue.QueueDateProperties.CreatedAt.ToString());
-            properties.Add(nameof(selectedQueue.QueueDateProperties.UpdatedAt).ToSpaceSeperated(), selectedQueue.QueueDateProperties.UpdatedAt.ToString());
-            properties.Add(nameof(selectedQueue.QueueTimeDetails.AutoDeleteOnIdle).ToSpaceSeperated(), selectedQueue.QueueTimeDetails.AutoDeleteOnIdle.ToString());
-            properties.Add(nameof(selectedQueue.QueueTimeDetails.DuplicateDetectionHistoryTimeWindow).ToSpaceSeperated(),
-                           selectedQueue.QueueTimeDetails.DuplicateDetectionHistoryTimeWindow.ToString());
-            properties.Add(nameof(selectedQueue.QueueTimeDetails.DefaultMessageTimeToLive).ToSpaceSeperated(), selectedQueue.QueueTimeDetails.DefaultMessageTimeToLive.ToString());
-            return properties;
-        }
-
+        // Process subscription changed event
         private async void OnSubscriptionValueChanged(ChangeEventArgs e)
         {
             try
@@ -267,9 +234,10 @@ namespace ServiceBusDriver.Client.UIComponents.Components
                         _deadLetterTxt = _subscriptionDetails.SubscriptionStats.DeadLetterMessageCount.ToString();
                         _propertiesSpinner = false;
 
+
                         StateHasChanged();
 
-                        var properties = SetSubscriptionProperties(selectedSubscription);
+                        var properties = PropertiesHelper.SetSubscriptionProperties(selectedSubscription);
 
                         await _propertiesNotifierService.SetSubscriptionProperties(properties);
                         _traceLogsNotifier.AddToQueue("Subscription Details Received for Instance:" + _instanceIdSelectBox + ", Topic:" + _topicNameSelectBox + ", Subscription:" +
@@ -287,42 +255,11 @@ namespace ServiceBusDriver.Client.UIComponents.Components
             }
         }
 
-        private Dictionary<string, string> SetSubscriptionProperties(SubscriptionResponseDto selectedSubscription)
-        {
-            var properties = new Dictionary<string, string>();
-            properties.Add(nameof(selectedSubscription.MaxDeliveryCount).ToSpaceSeperated(), selectedSubscription.MaxDeliveryCount.ToString());
-            properties.Add(nameof(selectedSubscription.EntityStatus).ToSpaceSeperated(), selectedSubscription.EntityStatus);
-            properties.Add(nameof(selectedSubscription.ForwardTo).ToSpaceSeperated(), selectedSubscription.ForwardTo);
-            properties.Add(nameof(selectedSubscription.ForwardDeadLetteredMessagesTo).ToSpaceSeperated(), selectedSubscription.ForwardDeadLetteredMessagesTo);
-            properties.Add(nameof(selectedSubscription.UserMetadata).ToSpaceSeperated(), selectedSubscription.UserMetadata);
-            properties.Add(nameof(selectedSubscription.SubscriptionStats.TotalMessageCount).ToSpaceSeperated(), selectedSubscription.SubscriptionStats.TotalMessageCount.ToString());
-            properties.Add(nameof(selectedSubscription.SubscriptionStats.ActiveMessageCount).ToSpaceSeperated(), selectedSubscription.SubscriptionStats.ActiveMessageCount.ToString());
-            properties.Add(nameof(selectedSubscription.SubscriptionStats.DeadLetterMessageCount).ToSpaceSeperated(), selectedSubscription.SubscriptionStats.DeadLetterMessageCount.ToString());
-            properties.Add(nameof(selectedSubscription.SubscriptionStats.TransferMessageCount).ToSpaceSeperated(), selectedSubscription.SubscriptionStats.TransferMessageCount.ToString());
-            properties.Add(nameof(selectedSubscription.SubscriptionStats.TransferDeadLetterMessageCount).ToSpaceSeperated(),
-                           selectedSubscription.SubscriptionStats.TransferDeadLetterMessageCount.ToString());
-            properties.Add(nameof(selectedSubscription.SubscriptionTimeDetails.LockDuration).ToSpaceSeperated(), selectedSubscription.SubscriptionTimeDetails.LockDuration);
-            properties.Add(nameof(selectedSubscription.SubscriptionTimeDetails.DefaultMessageTimeToLive).ToSpaceSeperated(), selectedSubscription.SubscriptionTimeDetails.DefaultMessageTimeToLive);
-            properties.Add(nameof(selectedSubscription.SubscriptionTimeDetails.AutoDeleteOnIdle).ToSpaceSeperated(), selectedSubscription.SubscriptionTimeDetails.AutoDeleteOnIdle);
-            properties.Add(nameof(selectedSubscription.SubscriptionDateProperties.AccessedAt).ToSpaceSeperated(), selectedSubscription.SubscriptionDateProperties.AccessedAt.ToString());
-            properties.Add(nameof(selectedSubscription.SubscriptionDateProperties.CreatedAt).ToSpaceSeperated(), selectedSubscription.SubscriptionDateProperties.CreatedAt.ToString());
-            properties.Add(nameof(selectedSubscription.SubscriptionDateProperties.UpdatedAt).ToSpaceSeperated(), selectedSubscription.SubscriptionDateProperties.UpdatedAt.ToString());
-            properties.Add(nameof(selectedSubscription.SubscriptionCheckBoxProperties.RequiresSession).ToSpaceSeperated(),
-                           selectedSubscription.SubscriptionCheckBoxProperties.RequiresSession.ToString());
-            properties.Add(nameof(selectedSubscription.SubscriptionCheckBoxProperties.DeadLetteringOnMessageExpiration).ToSpaceSeperated(),
-                           selectedSubscription.SubscriptionCheckBoxProperties.DeadLetteringOnMessageExpiration.ToString());
-            properties.Add(nameof(selectedSubscription.SubscriptionCheckBoxProperties.EnableDeadLetteringOnFilterEvaluationExceptions).ToSpaceSeperated(),
-                           selectedSubscription.SubscriptionCheckBoxProperties.EnableDeadLetteringOnFilterEvaluationExceptions.ToString());
-            properties.Add(nameof(selectedSubscription.SubscriptionCheckBoxProperties.EnableBatchedOperations).ToSpaceSeperated(),
-                           selectedSubscription.SubscriptionCheckBoxProperties.EnableBatchedOperations.ToString());
-            return properties;
-        }
-
         private async void PeekActiveMessages()
         {
             try
             {
-                if (ValidatePropertiesAreNotNull() && ValidatePeekParams(_activeMsgsText, _activeMsgCountInput))
+                if (ValidatePropertiesAreNotNull() && ValidateFetchParams(_activeMsgsText, _activeMsgCountInput))
                 {
                     _peekActiveMessageSpinner = true;
                     _messages = await _messageHandler.GetActiveMessages(_instanceIdSelectBox, _queueNameSelectBox, _topicNameSelectBox, _subscriptionNameSelectBox, _activeMsgCountInput);
@@ -332,7 +269,7 @@ namespace ServiceBusDriver.Client.UIComponents.Components
                     await _messageNotifierService.SetCurrentPropertiesAndMessages(_instanceIdSelectBox, typeBreadCrumb, subsBreadCrumb, "Active", _messages);
 
                     _peekActiveMessageSpinner = false;
-                 
+
                     StateHasChanged();
 
                     _traceLogsNotifier.AddToQueue("Message Details Received for Instance:" + _instanceIdSelectBox + ", Topic:" + _topicNameSelectBox + ", Subscription:" + _subscriptionNameSelectBox)
@@ -345,33 +282,66 @@ namespace ServiceBusDriver.Client.UIComponents.Components
             }
         }
 
-        private async void ReceiveActiveMessages()
+        //Show confirm Alert for receive and delete operation
+        private async void ReceiveAndDeleteShowConfirmAlert(bool isDeadLetterFetch)
         {
-            try
+            if (!isDeadLetterFetch)
             {
-                if (ValidatePropertiesAreNotNull() && ValidatePeekParams(_activeMsgsText, _activeMsgCountInput))
+                var swalHelper = new SweetAlertHelper();
+                await swalHelper.ShowSweetAlertConfirm(_swal, null,
+                                                       "This action will delete the message from queue",
+                                                       true, null, null,
+                                                       HandleConfirmAlertResultForActiveFetch);
+            }
+            else
+            {
+                var swalHelper = new SweetAlertHelper();
+                await swalHelper.ShowSweetAlertConfirm(_swal, null,
+                                                       "This action will delete the message from queue",
+                                                       true, null, null,
+                                                       HandleConfirmAlertResultForDeadLetterReceive);
+            }
+        }
+
+        // Perform task based on user action on confirm box for receive and delete 
+        public async Task HandleConfirmAlertResultForActiveFetch(SweetAlertResult result)
+        {
+            if (result.IsConfirmed)
+            {
+                try
                 {
-                    _receiveAndDeleteActiveMessageSpinner = true;
-                    _messages = await _messageHandler.GetActiveMessages(_instanceIdSelectBox, _queueNameSelectBox, _topicNameSelectBox, _subscriptionNameSelectBox, _activeMsgCountInput, true);
-
-                    var typeBreadCrumb = _featureIsQueue ? _queueNameSelectBox : _topicNameSelectBox;
-                    var subsBreadCrumb = _featureIsQueue ? null : _subscriptionNameSelectBox;
-                    await _messageNotifierService.SetCurrentPropertiesAndMessages(_instanceIdSelectBox, typeBreadCrumb, subsBreadCrumb, "Active", _messages);
-
-                    _receiveAndDeleteActiveMessageSpinner = false;
-                    OnSubscriptionValueChanged(new ChangeEventArgs()
+                    if (ValidatePropertiesAreNotNull() && ValidateFetchParams(_activeMsgsText, _activeMsgCountInput))
                     {
-                        Value = _subscriptionNameSelectBox
-                    });
-                    StateHasChanged();
+                        _receiveAndDeleteActiveMessageSpinner = true;
+                        _messages = await _messageHandler.GetActiveMessages(_instanceIdSelectBox, _queueNameSelectBox, _topicNameSelectBox, _subscriptionNameSelectBox, _activeMsgCountInput, true);
 
-                    _traceLogsNotifier.AddToQueue("Message Details Received for Instance:" + _instanceIdSelectBox + ", Topic:" + _topicNameSelectBox + ", Subscription:" + _subscriptionNameSelectBox)
-                                      .SafeFireAndForget();
+                        var typeBreadCrumb = _featureIsQueue ? _queueNameSelectBox : _topicNameSelectBox;
+                        var subsBreadCrumb = _featureIsQueue ? null : _subscriptionNameSelectBox;
+                        await _messageNotifierService.SetCurrentPropertiesAndMessages(_instanceIdSelectBox, typeBreadCrumb, subsBreadCrumb, "Active", _messages);
+
+                        _receiveAndDeleteActiveMessageSpinner = false;
+                        OnSubscriptionValueChanged(new ChangeEventArgs()
+                        {
+                            Value = _subscriptionNameSelectBox
+                        });
+                        StateHasChanged();
+
+                        _traceLogsNotifier.AddToQueue("Message Details Received for Instance:" + _instanceIdSelectBox + ", Topic:" + _topicNameSelectBox + ", Subscription:" +
+                                                      _subscriptionNameSelectBox)
+                                          .SafeFireAndForget();
+                    }
+                }
+                catch (SbDriverUiException sbe)
+                {
+                    _toastService.ShowError(sbe.Message);
                 }
             }
-            catch (SbDriverUiException sbe)
+            else if(result.Dismiss == DismissReason.Cancel)
             {
-                _toastService.ShowError(sbe.Message);
+                await _swal.FireAsync(
+                    "Cancelled",
+                    "Messages not fetched. Try Peek instead",
+                    SweetAlertIcon.Error);
             }
         }
 
@@ -379,7 +349,7 @@ namespace ServiceBusDriver.Client.UIComponents.Components
         {
             try
             {
-                if (ValidatePropertiesAreNotNull() && ValidatePeekParams(_deadLetterTxt, _deadLetterMsgCountInput))
+                if (ValidatePropertiesAreNotNull() && ValidateFetchParams(_deadLetterTxt, _deadLetterMsgCountInput))
                 {
                     _peekDlqMessageSpinner = true;
                     _messages = await _messageHandler.GetDeadLetterMessages(_instanceIdSelectBox, _queueNameSelectBox, _topicNameSelectBox, _subscriptionNameSelectBox, _deadLetterMsgCountInput);
@@ -401,33 +371,44 @@ namespace ServiceBusDriver.Client.UIComponents.Components
             }
         }
 
-        private async void ReceiveDeadLetter()
+        public async Task HandleConfirmAlertResultForDeadLetterReceive(SweetAlertResult result)
         {
-            try
+            if (result.IsConfirmed)
             {
-                if (ValidatePropertiesAreNotNull() && ValidatePeekParams(_deadLetterTxt, _deadLetterMsgCountInput))
+                try
                 {
-                    _receiveAndDeleteActiveMessageSpinner = true;
-                    _messages = await _messageHandler.GetDeadLetterMessages(_instanceIdSelectBox, _queueNameSelectBox, _topicNameSelectBox, _subscriptionNameSelectBox, _deadLetterMsgCountInput, true);
-
-                    var typeBreadCrumb = _featureIsQueue ? _queueNameSelectBox : _topicNameSelectBox;
-                    var subsBreadCrumb = _featureIsQueue ? null : _subscriptionNameSelectBox;
-                    await _messageNotifierService.SetCurrentPropertiesAndMessages(_instanceIdSelectBox, typeBreadCrumb, subsBreadCrumb, "Active", _messages);
-
-                    _receiveAndDeleteActiveMessageSpinner = false;
-                    OnSubscriptionValueChanged(new ChangeEventArgs()
+                    if (ValidatePropertiesAreNotNull() && ValidateFetchParams(_deadLetterTxt, _deadLetterMsgCountInput))
                     {
-                        Value = _subscriptionNameSelectBox
-                    });
-                    StateHasChanged();
+                        _receiveAndDeleteActiveMessageSpinner = true;
+                        _messages = await _messageHandler.GetDeadLetterMessages(_instanceIdSelectBox, _queueNameSelectBox, _topicNameSelectBox, _subscriptionNameSelectBox, _deadLetterMsgCountInput,
+                                                                                true);
 
-                    _traceLogsNotifier.AddToQueue("Message Details Received for Instance:" + _instanceIdSelectBox + ", Topic:" + _topicNameSelectBox + ", Subscription:" +
-                                                  _subscriptionNameSelectBox).SafeFireAndForget();
+                        var typeBreadCrumb = _featureIsQueue ? _queueNameSelectBox : _topicNameSelectBox;
+                        var subsBreadCrumb = _featureIsQueue ? null : _subscriptionNameSelectBox;
+                        await _messageNotifierService.SetCurrentPropertiesAndMessages(_instanceIdSelectBox, typeBreadCrumb, subsBreadCrumb, "Active", _messages);
+
+                        _receiveAndDeleteActiveMessageSpinner = false;
+                        OnSubscriptionValueChanged(new ChangeEventArgs()
+                        {
+                            Value = _subscriptionNameSelectBox
+                        });
+                        StateHasChanged();
+
+                        _traceLogsNotifier.AddToQueue("Message Details Received for Instance:" + _instanceIdSelectBox + ", Topic:" + _topicNameSelectBox + ", Subscription:" +
+                                                      _subscriptionNameSelectBox).SafeFireAndForget();
+                    }
+                }
+                catch (SbDriverUiException sbe)
+                {
+                    _toastService.ShowError(sbe.Message);
                 }
             }
-            catch (SbDriverUiException sbe)
+            else if(result.Dismiss == DismissReason.Cancel)
             {
-                _toastService.ShowError(sbe.Message);
+                await _swal.FireAsync(
+                    "Cancelled",
+                    "Messages not fetched. Try Peek instead",
+                    SweetAlertIcon.Error);
             }
         }
 
@@ -435,11 +416,11 @@ namespace ServiceBusDriver.Client.UIComponents.Components
         {
             try
             {
-                if (ValidatePropertiesAreNotNull() && ValidatePeekParams(_activeMsgsText, _lastNMsgCountInput))
+                if (ValidatePropertiesAreNotNull() && ValidateFetchParams(_activeMsgsText, _lastNMsgCountInput))
                 {
                     _peekLastNMessageSpinner = true;
-                    _messages = await _messageHandler.GetLastNMessages(_instanceIdSelectBox, _queueNameSelectBox, _topicNameSelectBox, _subscriptionNameSelectBox,  false, _lastNMsgCountInput);
-                    
+                    _messages = await _messageHandler.GetLastNMessages(_instanceIdSelectBox, _queueNameSelectBox, _topicNameSelectBox, _subscriptionNameSelectBox, false, _lastNMsgCountInput);
+
                     var typeBreadCrumb = _featureIsQueue ? _queueNameSelectBox : _topicNameSelectBox;
                     var subsBreadCrumb = _featureIsQueue ? null : _subscriptionNameSelectBox;
                     await _messageNotifierService.SetCurrentPropertiesAndMessages(_instanceIdSelectBox, typeBreadCrumb, subsBreadCrumb, "Active", _messages);
@@ -457,7 +438,7 @@ namespace ServiceBusDriver.Client.UIComponents.Components
             }
         }
 
-        private bool ValidatePeekParams(string messagesInQueue, int messagesToPeek)
+        private bool ValidateFetchParams(string messagesInQueue, int messagesToPeek)
         {
             var hasMessages = messagesInQueue != "0";
             var result = true;
@@ -465,8 +446,8 @@ namespace ServiceBusDriver.Client.UIComponents.Components
             {
                 if (messagesToPeek <= 0)
                 {
-                    _traceLogsNotifier.AddToQueue(TraceTypeEnum.ERROR, "Peek Count not valid").SafeFireAndForget();
-                    _toastService.ShowError("Peek Count not valid");
+                    _traceLogsNotifier.AddToQueue(TraceTypeEnum.ERROR, "Fetch Count not valid").SafeFireAndForget();
+                    _toastService.ShowError("Fetch Count not valid");
                     result = false;
                 }
 
@@ -478,13 +459,12 @@ namespace ServiceBusDriver.Client.UIComponents.Components
             else
             {
                 result = false;
-                _traceLogsNotifier.AddToQueue(TraceTypeEnum.ERROR, "No Messages In Queue. Cannot Peek").SafeFireAndForget();
-                _toastService.ShowError("No Messages In Queue. Cannot Peek");
+                _traceLogsNotifier.AddToQueue(TraceTypeEnum.ERROR, "No Messages In Queue. Cannot Fetch").SafeFireAndForget();
+                _toastService.ShowError("No Messages In Queue. Cannot Fetch");
             }
 
             return result;
         }
-
 
 
         private void UpdateSearchQueue(bool deadLetterQueue)
@@ -525,7 +505,8 @@ namespace ServiceBusDriver.Client.UIComponents.Components
 
 
                             _searchMessageSpinner = true;
-                            _messages = await _messageHandler.SearchMessages(_instanceIdSelectBox, _queueNameSelectBox, _topicNameSelectBox, _subscriptionNameSelectBox, _searchPathInput, _searchKeyInput,
+                            _messages = await _messageHandler.SearchMessages(_instanceIdSelectBox, _queueNameSelectBox, _topicNameSelectBox, _subscriptionNameSelectBox, _searchPathInput,
+                                                                             _searchKeyInput,
                                                                              _searchDlQueueRadio);
 
                             await _messageNotifierService.SetCurrentPropertiesAndMessages(_instanceIdSelectBox, _topicNameSelectBox, _subscriptionNameSelectBox,
