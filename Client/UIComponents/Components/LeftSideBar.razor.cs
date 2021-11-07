@@ -196,9 +196,12 @@ namespace ServiceBusDriver.Client.UIComponents.Components
                     _propertiesSpinner = true;
                     _queueNameSelectBox = e.Value.ToString();
 
-                    var selectedQueue = _queues.FirstOrDefault(x => x.Name == (_queueNameSelectBox));
+                    var selectedQueue = await _queueHandler.GetQueue(_instanceIdSelectBox, _queueNameSelectBox);
+
                     _activeMsgsText = selectedQueue.QueueStats.ActiveMessageCount.ToString();
                     _deadLetterTxt = selectedQueue.QueueStats.DeadLetterMessageCount.ToString();
+                    _propertiesSpinner = false;
+                    StateHasChanged();
 
                     if (_instanceIdSelectBox.IsNotNullOrWhitespace())
                     {
@@ -320,10 +323,21 @@ namespace ServiceBusDriver.Client.UIComponents.Components
                         await _messageNotifierService.SetCurrentPropertiesAndMessages(_instanceIdSelectBox, typeBreadCrumb, subsBreadCrumb, "Active", _messages);
 
                         _receiveAndDeleteActiveMessageSpinner = false;
-                        OnSubscriptionValueChanged(new ChangeEventArgs()
+                        if (_featureIsQueue)
                         {
-                            Value = _subscriptionNameSelectBox
-                        });
+                            OnQueueValueChanged(new ChangeEventArgs()
+                            {
+                                Value = _queueNameSelectBox
+                            });
+                        }
+                        else
+                        {
+                            OnSubscriptionValueChanged(new ChangeEventArgs()
+                            {
+                                Value = _subscriptionNameSelectBox
+                            });
+                        }
+                       
                         StateHasChanged();
 
                         _traceLogsNotifier.AddToQueue("Message Details Received for Instance:" + _instanceIdSelectBox + ", Topic:" + _topicNameSelectBox + ", Subscription:" +
@@ -379,7 +393,7 @@ namespace ServiceBusDriver.Client.UIComponents.Components
                 {
                     if (ValidatePropertiesAreNotNull() && ValidateFetchParams(_deadLetterTxt, _deadLetterMsgCountInput))
                     {
-                        _receiveAndDeleteActiveMessageSpinner = true;
+                        _receiveAndDeleteDlMessageSpinner = true;
                         _messages = await _messageHandler.GetDeadLetterMessages(_instanceIdSelectBox, _queueNameSelectBox, _topicNameSelectBox, _subscriptionNameSelectBox, _deadLetterMsgCountInput,
                                                                                 true);
 
@@ -387,7 +401,7 @@ namespace ServiceBusDriver.Client.UIComponents.Components
                         var subsBreadCrumb = _featureIsQueue ? null : _subscriptionNameSelectBox;
                         await _messageNotifierService.SetCurrentPropertiesAndMessages(_instanceIdSelectBox, typeBreadCrumb, subsBreadCrumb, "Active", _messages);
 
-                        _receiveAndDeleteActiveMessageSpinner = false;
+                        _receiveAndDeleteDlMessageSpinner = false;
                         OnSubscriptionValueChanged(new ChangeEventArgs()
                         {
                             Value = _subscriptionNameSelectBox
