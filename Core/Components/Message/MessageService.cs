@@ -10,6 +10,7 @@ using ServiceBusDriver.Core.Components.Instance;
 using ServiceBusDriver.Core.Components.SbClients;
 using ServiceBusDriver.Core.Constants;
 using ServiceBusDriver.Core.Models.Errors;
+using ServiceBusDriver.Core.Models.Features.Instance;
 using ServiceBusDriver.Core.Models.Features.Message;
 
 namespace ServiceBusDriver.Core.Components.Message
@@ -36,35 +37,20 @@ namespace ServiceBusDriver.Core.Components.Message
 
             var instance = await _instanceService.GetInstanceFull(command.InstanceId, cancellationToken);
 
-            if (instance == null)
-            {
-                throw SbDriverExceptionFactory.CreateBadRequestException("Invalid Id");
-            }
-
-            var adminClient = _sbAdminService.Client(instance.ConnectionString);
-
-            var messagesInQueue = await GetMessagesInQueueCount(command, adminClient, cancellationToken);
-
-            if (messagesInQueue == 0)
-            {
-                throw new SbDriverException
-                {
-                    ErrorMessage = new ErrorMessageModel
-                    {
-                        Code = ErrorConstants.NoMessagesInQueueErrorCode,
-                        UserMessageText = string.Format(ErrorConstants.NoMessagesInQueueErrorMessage, command.SubscriptionName)
-                    }
-                };
-            }
+            //------ Validate queue has messages -------
+            var messagesInQueue = await ValidateQueueHasMessages(command, instance, cancellationToken);
 
             var sbClient = _sbClientService.Client(instance.ConnectionString);
 
             try
             {
+                //------ Set SubQueue based on input -------
                 var subQueue = command.DeadLetterQueue ? SubQueue.DeadLetter : SubQueue.None;
 
+                //------ Create receiver with preFetch count and mode -------
                 var receiver = GetServiceBusReceiver(sbClient, command, messagesInQueue, subQueue);
 
+                //------ Fetch all messages or not -------
                 var maxMessages = command.FetchAll ? messagesInQueue : command.MaxMessages;
                 var messages = await GetServiceBusReceivedMessages(receiver, maxMessages, cancellationToken);
 
@@ -100,6 +86,32 @@ namespace ServiceBusDriver.Core.Components.Message
                     }
                 };
             }
+        }
+
+        private async Task<int> ValidateQueueHasMessages(FetchMessagesCommand command, ServiceBusInstanceModel instance, CancellationToken cancellationToken)
+        {
+            if (instance == null)
+            {
+                throw SbDriverExceptionFactory.CreateBadRequestException("Invalid Id");
+            }
+
+            var adminClient = _sbAdminService.Client(instance.ConnectionString);
+
+            var messagesInQueue = await GetMessagesInQueueCount(command, adminClient, cancellationToken);
+
+            if (messagesInQueue == 0)
+            {
+                throw new SbDriverException
+                {
+                    ErrorMessage = new ErrorMessageModel
+                    {
+                        Code = ErrorConstants.NoMessagesInQueueErrorCode,
+                        UserMessageText = string.Format(ErrorConstants.NoMessagesInQueueErrorMessage, command.SubscriptionName)
+                    }
+                };
+            }
+
+            return messagesInQueue;
         }
 
         private async Task<List<ServiceBusReceivedMessage>> GetServiceBusReceivedMessages(ServiceBusReceiver receiver, int maxMessages, CancellationToken cancellationToken)

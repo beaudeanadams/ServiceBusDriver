@@ -143,6 +143,11 @@ namespace ServiceBusDriver.Client.UIComponents.Components
         private void UpdateFeatureType(bool isQueue)
         {
             _featureIsQueue = isQueue;
+            _topicNameSelectBox = null;
+            _subscriptionNameSelectBox = null;
+            _queueNameSelectBox = null;
+            StateHasChanged();
+         
         }
 
         // Process topic changed event

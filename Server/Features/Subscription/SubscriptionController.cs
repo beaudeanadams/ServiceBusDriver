@@ -34,6 +34,21 @@ namespace ServiceBusDriver.Server.Features.Subscription
             return Ok(result);
         }
 
-       
+        [HttpPost]
+        [Route("purge")]
+        [Produces("application/json")]
+        public async Task<ActionResult> Purge([FromBody] PurgeRequest request)
+        {
+            Guarantee.NotNull(request);
+            Guarantee.NotNull(request.SubscriptionName);
+            Guarantee.NotNull(request.InstanceId);
+            Guarantee.NotNull(request.TopicName);
+
+            var result = await _mediator.Send(request);
+
+            return Ok(result);
+        }
+
+
     }
 }
