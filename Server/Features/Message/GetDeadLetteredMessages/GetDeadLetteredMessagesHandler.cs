@@ -43,7 +43,8 @@ namespace ServiceBusDriver.Server.Features.Message.GetDeadLetteredMessages
                 DeadLetterQueue = true,
                 OrderByDescending = false,
                 PrefetchCount = request.PrefetchCount,
-                MaxMessages = request.MaxMessages
+                MaxMessages = request.MaxMessages,
+                ReceiveAndDelete = request.ReceiveAndDelete
             }, cancellationToken);
 
             var response = _mapper.Map<List<MessageResponseDto>>(result);

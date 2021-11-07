@@ -12,5 +12,6 @@ namespace ServiceBusDriver.Shared.Features.Message
         public int PrefetchCount { get; set; } = MessageConstants.DefaultPrefetchCount;
         public int MaxMessages { get; set; } = MessageConstants.DefaultMaxMessages;
         public string InstanceId { get; set; }
+        public bool ReceiveAndDelete { get; set; } // Defaulted to false
     }
 }

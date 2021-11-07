@@ -41,7 +41,7 @@ namespace ServiceBusDriver.Core.Components.Queue
             }
 
             await Task.WhenAll(queueFetchTaskList);
-            
+
             var queueList = new List<QueueResponse>();
             foreach (var task in queueFetchTaskList)
             {
@@ -75,8 +75,8 @@ namespace ServiceBusDriver.Core.Components.Queue
                 foreach (var Queue in queues.Result)
                 {
                     var runtimeProperty = queueRuntimeProperty.Result
-                        .FirstOrDefault(x => x.Name == Queue.Name);
-                    queueDetailList.Add(new QueueResponse {RunTimeProperties = runtimeProperty, QueueProperties = Queue});
+                                                              .FirstOrDefault(x => x.Name == Queue.Name);
+                    queueDetailList.Add(new QueueResponse { RunTimeProperties = runtimeProperty, QueueProperties = Queue });
                 }
 
                 _logger.LogInformation("Fetched {0} Queues", queueDetailList.Count);
@@ -103,12 +103,38 @@ namespace ServiceBusDriver.Core.Components.Queue
         public async Task<QueueResponse> GetQueueByName(string instanceId, string queueName, CancellationToken cancellationToken = default)
         {
             _logger.LogTrace("Start {0}", nameof(GetQueueByName));
+            var instance = await _instanceService.GetInstanceFull(instanceId, cancellationToken);
 
-            var queues = await GetQueuesForInstance(instanceId, cancellationToken);
+            if (instance == null)
+            {
+                throw SbDriverExceptionFactory.CreateBadRequestException("Invalid Id");
+            }
 
-            _logger.LogTrace("Finish {0}", nameof(GetQueueByName));
+            try
+            {
+                var client = _sbAdminService.Client(instance.ConnectionString);
+                var queue = client.GetQueueAsync(queueName, cancellationToken);
+                var queueRuntimeProperty = client.GetQueueRuntimePropertiesAsync(queueName, cancellationToken);
+                await Task.WhenAll(queue, queueRuntimeProperty);
 
-            return queues.FirstOrDefault(x => x.QueueProperties.Name == queueName);
+                _logger.LogTrace("Finish {0}", nameof(GetQueueByName));
+
+                return new QueueResponse { RunTimeProperties = queueRuntimeProperty.Result, QueueProperties = queue.Result };
+            }
+            catch (ServiceBusException sbe)
+            {
+                _logger.LogError(sbe, "Error while fetching data from ServiceBus", nameof(GetQueuesForInstance));
+
+                throw new SbDriverException(sbe.Message)
+                {
+                    ErrorMessage = new ErrorMessageModel
+                    {
+                        Code = ErrorConstants.CommunicationsErrorCode,
+                        UserMessageText = sbe.Message,
+                        SupportReferenceId = new Guid().ToString()
+                    }
+                };
+            }
         }
     }
 }

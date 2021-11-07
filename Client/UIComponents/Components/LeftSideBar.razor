@@ -8,6 +8,7 @@
 @inject MessageNotifierService _messageNotifierService
 @inject PropertiesNotifierService _propertiesNotifierService
 @inject IToastService _toastService
+@inject SweetAlertService _swal;
 @using Microsoft.Extensions.Logging
 @using ServiceBusDriver.Client.Features.Instance
 @using ServiceBusDriver.Client.Features.Message
@@ -15,6 +16,7 @@
 @using ServiceBusDriver.Client.Features.Subscription
 @using ServiceBusDriver.Client.Features.Topic
 @using ServiceBusDriver.Client.Services
+@using CurrieTechnologies.Razor.SweetAlert2
 @inject ILogger<Index> _logger
 
 <div class="flex-grow-0 flex-shrink w-2/5 px-4 w-fixed ">
@@ -160,7 +162,7 @@ else
         </div>
     }
 
-    @if (_subscriptionNameSelectBox != null || _queueNameSelectBox!=null)
+    @if (_subscriptionNameSelectBox != null || _queueNameSelectBox != null)
     {
         <div class="flex">
             <div class="flex flex-col flex-grow w-2/5">
@@ -223,52 +225,90 @@ else
 }
 
 <br/> <br/>
-@if (_subscriptionNameSelectBox != null || _queueNameSelectBox!=null)
+@if (_subscriptionNameSelectBox != null || _queueNameSelectBox != null)
 {
-    <p class="text-lg leading-6 font-medium text-gray-900">Peek Messages</p>
+    <p class="text-lg leading-6 font-medium text-gray-900">Fetch Messages</p>
     <hr style="padding-bottom: 2%; margin-top: 5px;">
 
     <div class="flex">
         <div class="flex flex-col flex-grow w-5/5">
-            <label for="getlastnmsgs" class="mb-2 block font-semibold text-gray-700"> Peek Active Messages</label>
-            <div>
-                <input id="getlastnmsgs" name="getlastnmsgs" class="border w-full p-3" type="number" @bind-value="@_activeMsgCountInput"/>
-                <span class="inline-flex items-center bg-gray-500 hover:bg-purple-600 p-3 shadow-md rounded-md text-white peek-get-l" @onclick="@PeekActiveMessages">
-                    @if (_peekActiveMessageSpinner)
-                    {
-                        <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                        </svg>
-                    }
-                    else
-                    {
-                        <span>PEEK</span>
-                    }
-                </span>
-            </div>
+            <label for="getActiveMessages" class="mb-2 block font-semibold text-gray-700"> Fetch Active Messages</label>
+            <input id="getActiveMessages" name="getActiveMessages" class="border w-full p-3" type="number" @bind-value="@_activeMsgCountInput"/>
         </div>
     </div>
+    <div class="flex">
+        <div class="flex flex-col flex-grow w-2/5">
 
+            <span class="inline-flex items-center bg-red-400 hover:bg-purple-600 p-3 shadow-md rounded-md text-white recieve-and-peek-button" @onclick="@(() => @ReceiveAndDeleteShowConfirmAlert(false))">
+                @if (_receiveAndDeleteActiveMessageSpinner)
+                {
+                    <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                }
+                else
+                {
+                    <span>RECEIVE & DELETE</span>
+                }
+            </span>
+        </div>
+        <span>&nbsp;</span>
+        <div class="flex flex-col flex-grow w-2/5">
+            <span class="inline-flex items-center bg-gray-500 hover:bg-purple-600 p-3 shadow-md rounded-md text-white recieve-and-peek-button" @onclick="@PeekActiveMessages">
+                @if (_peekActiveMessageSpinner)
+                {
+                    <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                }
+                else
+                {
+                    <span>PEEK</span>
+                }
+            </span>
+        </div>
+    </div>
     <div class="flex">
         <div class="flex flex-col flex-grow w-5/5">
-            <label for="getlastnmsgs" class="mb-2 block font-semibold text-gray-700"> Peek Dead Letter Queue</label>
-            <div>
-                <input id="getlastnmsgs" name="getlastnmsgs" class="border w-full p-3" type="number" placeholder="Enter number to fetch" @bind-value="@_deadLetterMsgCountInput"/>
-                <span class="inline-flex items-center bg-gray-500 hover:bg-purple-600 p-3 shadow-md rounded-md text-white peek-get-l" @onclick="@PeekDeadLetter">
-                    @if (_peekDlqMessageSpinner)
-                    {
-                        <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                        </svg>
-                    }
-                    else
-                    {
-                        <span>PEEK</span>
-                    }
-                </span>
-            </div>
+            <label for="getDlMessages" class="mb-2 block font-semibold text-gray-700"> Fetch Dead Letter Queue</label>
+            <input id="getDlMessages" name="getDlMessages" class="border w-full p-3" type="number" placeholder="Enter number to fetch" @bind-value="@_deadLetterMsgCountInput"/>
+
+        </div>
+    </div>
+    <div class="flex">
+        <div class="flex flex-col flex-grow w-2/5">
+
+            <span class="inline-flex items-center bg-red-400 hover:bg-purple-600 p-3 shadow-md rounded-md text-white recieve-and-peek-button" @onclick="@(() => @ReceiveAndDeleteShowConfirmAlert(true))">
+                @if (_receiveAndDeleteDlMessageSpinner)
+                {
+                    <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                }
+                else
+                {
+                    <span>RECEIVE & DELETE</span>
+                }
+            </span>
+        </div>
+        <span>&nbsp;</span>
+        <div class="flex flex-col flex-grow w-2/5">
+            <span class="inline-flex items-center bg-gray-500 hover:bg-purple-600 p-3 shadow-md rounded-md text-white recieve-and-peek-button" @onclick="@PeekDeadLetter">
+                @if (_peekDlqMessageSpinner)
+                {
+                    <svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                }
+                else
+                {
+                    <span>PEEK</span>
+                }
+            </span>
         </div>
     </div>
 
@@ -295,7 +335,7 @@ else
     </div>
 }
 <br/> <br/>
-@if (_subscriptionNameSelectBox != null || _queueNameSelectBox!=null)
+@if (_subscriptionNameSelectBox != null || _queueNameSelectBox != null)
 {
     <p class="text-lg leading-6 font-medium text-gray-900">Search Conditions</p>
     <hr style="padding-bottom: 2%; margin-top: 5px;">

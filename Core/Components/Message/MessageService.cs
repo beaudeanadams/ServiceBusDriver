@@ -107,9 +107,11 @@ namespace ServiceBusDriver.Core.Components.Message
             _logger.LogTrace("Start {0}", nameof(GetServiceBusReceivedMessages));
             var messages = new List<ServiceBusReceivedMessage>();
             var previousSequenceNumber = -1L;
+            var count = maxMessages;
             do
             {
-                var messageBatch = await receiver.PeekMessagesAsync(maxMessages, null, cancellationToken);
+                var messageBatch = await receiver.ReceiveMessagesAsync(count, null, cancellationToken);
+
                 if (messageBatch.Count > 0)
                 {
                     var sequenceNumber = messageBatch[^1].SequenceNumber;
@@ -125,6 +127,9 @@ namespace ServiceBusDriver.Core.Components.Message
                 {
                     break;
                 }
+
+                // Set count to remaining number of messages to fetch
+                count = (maxMessages > messages.Count) ? maxMessages - messages.Count : count;
             } while (messages.Count < maxMessages);
 
             _logger.LogTrace("Finish {0}", nameof(GetServiceBusReceivedMessages));
@@ -136,12 +141,20 @@ namespace ServiceBusDriver.Core.Components.Message
             _logger.LogTrace("Start {0}", nameof(GetServiceBusReceiver));
 
             ServiceBusReceiver receiver;
+
+            var prefetchCount = activeMessageCount > MessageConstants.FetchMessagePrefetchCount ? MessageConstants.FetchMessagePrefetchCount : activeMessageCount;
+            if (command.ReceiveAndDelete)
+            {
+                // If Receive and delete, do not prefetch messages.
+                prefetchCount = 0;
+            }
+
             if (command.QueueName == null)
             {
                 receiver = sbClient.CreateReceiver(command.TopicName, command.SubscriptionName, new ServiceBusReceiverOptions
                 {
-                    ReceiveMode = ServiceBusReceiveMode.PeekLock,
-                    PrefetchCount = activeMessageCount > MessageConstants.FetchMessagePrefetchCount ? MessageConstants.FetchMessagePrefetchCount : activeMessageCount,
+                    ReceiveMode = command.ReceiveAndDelete ? ServiceBusReceiveMode.ReceiveAndDelete : ServiceBusReceiveMode.PeekLock,
+                    PrefetchCount = prefetchCount,
                     SubQueue = subQueue
                 });
             }
@@ -149,8 +162,8 @@ namespace ServiceBusDriver.Core.Components.Message
             {
                 receiver = sbClient.CreateReceiver(command.QueueName, new ServiceBusReceiverOptions
                 {
-                    ReceiveMode = ServiceBusReceiveMode.PeekLock,
-                    PrefetchCount = activeMessageCount > MessageConstants.FetchMessagePrefetchCount ? MessageConstants.FetchMessagePrefetchCount : activeMessageCount,
+                    ReceiveMode = command.ReceiveAndDelete ? ServiceBusReceiveMode.ReceiveAndDelete : ServiceBusReceiveMode.PeekLock,
+                    PrefetchCount = prefetchCount,
                     SubQueue = subQueue
                 });
             }

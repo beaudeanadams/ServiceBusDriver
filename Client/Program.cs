@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Blazored.LocalStorage;
 using Blazored.Toast;
+using CurrieTechnologies.Razor.SweetAlert2;
 using FluentValidation;
 using MatBlazor;
 using Microsoft.AspNetCore.Components.Authorization;
@@ -49,6 +50,9 @@ namespace ServiceBusDriver.Client
             // Third Party Components
             builder.Services.AddBlazoredLocalStorage();
             builder.Services.AddBlazoredToast();
+            builder.Services.AddSweetAlert2(options => {
+                options.Theme = SweetAlertTheme.Minimal;
+            });
 
             AddHttpClients(builder);
 

@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using ServiceBusDriver.Shared.Features.Queue;
 
 namespace ServiceBusDriver.Shared.Features.Topic
 {
